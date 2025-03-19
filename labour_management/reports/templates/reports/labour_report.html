@@ -43,4 +43,66 @@
 
     <h3>Total Hours Worked: {{ total_hours }}</h3>
     <h3>Total Labour Cost: £{{ total_cost }}</h3>
+
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <h2>Labour Cost Trends</h2>
+    <canvas id="labourCostChart"></canvas>
+
+    <h2>Hours Worked Trends</h2>
+    <canvas id="hoursWorkedChart"></canvas>
+
+    <script>
+        const labels = [{% for emp in labour_data %}"{{ emp.name }}",{% endfor %}];
+        const costs = [{% for emp in labour_data %}{{ emp.total_cost }},{% endfor %}];
+        const hours = [{% for emp in labour_data %}{{ emp.hours }},{% endfor %}];
+
+        const ctx1 = document.getElementById('labourCostChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Labour Cost (£)',
+                    data: costs,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('hoursWorkedChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Hours Worked',
+                    data: hours,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
 {% endblock %}
