@@ -1,0 +1,38 @@
+{% extends "labour_management/base.html" %}
+
+{% block title %}Approve Holidays{% endblock %}
+
+{% block content %}
+    <h1>Holiday Requests - Approvals</h1>
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in holiday_requests %}
+                <tr>
+                    <td>{{ req.employee }}</td>
+                    <td>{{ req.start_date }}</td>
+                    <td>{{ req.end_date }}</td>
+                    <td>{{ req.status }}</td>
+                    <td>
+                        {% if req.status == "Pending" %}
+                            <a href="{% url 'approve_holiday' req.id %}">Approve</a> | 
+                            <a href="{% url 'reject_holiday' req.id %}">Reject</a>
+                        {% else %}
+                            {{ req.status }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No holiday requests pending approval.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
