@@ -1,0 +1,27 @@
+{% extends "labour_management/base.html" %}
+
+{% block title %}Request Holiday{% endblock %}
+
+{% block content %}
+    <h1>Request a Holiday</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="employee">Employee:</label>
+        <select name="employee" required>
+            {% for emp in employees %}
+                <option value="{{ emp.id }}">{{ emp.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" name="start_date" required>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" name="end_date" required>
+
+        <label for="reason">Reason:</label>
+        <input type="text" name="reason" required>
+
+        <button type="submit">Submit Request</button>
+    </form>
+{% endblock %}
