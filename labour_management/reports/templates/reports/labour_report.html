@@ -6,6 +6,16 @@
     <h1>Labour Analysis Report</h1>
     <p>Report Date: {{ report_date }}</p>
 
+    <h3>Filter by:</h3>
+    <a href="{% url 'labour_report_filtered' 'weekly' %}"><button>Weekly</button></a>
+    <a href="{% url 'labour_report_filtered' 'monthly' %}"><button>Monthly</button></a>
+    <a href="{% url 'labour_report_filtered' 'yearly' %}"><button>Yearly</button></a>
+    <a href="{% url 'labour_report' %}"><button>All Time</button></a>
+
+    {% if time_filter %}
+        <h2>Showing {{ time_filter }} data</h2>
+    {% endif %}
+
     <table border="1" width="100%">
         <thead>
             <tr>
@@ -23,7 +33,7 @@
                     <td>{{ emp.role }}</td>
                     <td>{{ emp.hours }}</td>
                     <td>{{ emp.hourly_rate }}</td>
-                    <td>{{ emp.hours|floatformat:2 }} × {{ emp.hourly_rate|floatformat:2 }} = £{{ emp.total_cost|floatformat:2 }}</td>
+                    <td>£{{ emp.total_cost|floatformat:2 }}</td>
                 </tr>
             {% empty %}
                 <tr><td colspan="5">No data available.</td></tr>
