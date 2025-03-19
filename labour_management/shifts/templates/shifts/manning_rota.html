@@ -1,0 +1,27 @@
+{% extends "labour_management/base.html" %}
+
+{% block title %}Manning Rota for {{ date }} - {{ shift_type }}{% endblock %}
+
+{% block content %}
+    <h1>Manning Rota - {{ date }} ({{ shift_type }} Shift)</h1>
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Work Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for worker in rota %}
+                <tr>
+                    <td>{{ worker.name }}</td>
+                    <td>{{ worker.role }}</td>
+                    <td>{{ worker.area }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="3">No data available for this shift.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

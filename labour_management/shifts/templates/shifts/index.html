@@ -19,7 +19,7 @@
                     <td>{{ shift.date }}</td>
                     <td>{{ shift.shift_type }}</td>
                     <td>{{ shift.staffing }}</td>
-                    <td><a href="#">View Rota</a></td>
+                    <td><a href="{% url 'manning_rota' shift.date shift.shift_type %}">View Rota</a></td>
                 </tr>
             {% endfor %}
         </tbody>
