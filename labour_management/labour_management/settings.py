@@ -58,7 +58,7 @@ ROOT_URLCONF = "labour_management.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [BASE_DIR / "labour_management/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
