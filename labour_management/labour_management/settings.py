@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "shifts",
     "holidays",
     "reports",
+    'skills',
 ]
 
 MIDDLEWARE = [

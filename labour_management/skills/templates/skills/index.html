@@ -1,0 +1,33 @@
+{% extends "labour_management/base.html" %}
+
+{% block title %}Skills Matrix{% endblock %}
+
+{% block content %}
+    <h1>Skills Matrix</h1>
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Shift</th>
+                <th>Role</th>
+                <th>Primary Skill</th>
+                <th>Secondary Skill</th>
+                <th>Tertiary Skill</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in skills %}
+                <tr>
+                    <td>{{ emp.name }}</td>
+                    <td>{{ emp.shift }}</td>
+                    <td>{{ emp.role }}</td>
+                    <td>{{ emp.primary_skill }}</td>
+                    <td>{{ emp.secondary_skill|default:"-" }}</td>
+                    <td>{{ emp.tertiary_skill|default:"-" }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="6">No skill data available.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
