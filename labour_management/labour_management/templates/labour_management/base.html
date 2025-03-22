@@ -1,18 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Labour Management Tool{% endblock %}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        .navbar { background-color: #007bff; padding: 15px; text-align: center; }
-        .navbar a { color: white; text-decoration: none; padding: 10px; margin: 5px; }
-        .navbar a:hover { background-color: #0056b3; }
-        .container { padding: 20px; }
-    </style>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 <body>
+
     <div class="navbar">
         <a href="{% url 'employees_index' %}">Employees</a>
         <a href="{% url 'shifts_index' %}">Shift Schedule</a>
@@ -20,9 +19,12 @@
         <a href="{% url 'reports_index' %}">Reports</a>
         <a href="{% url 'skills_index' %}">Skills Matrix</a>
     </div>
-    
+
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+
+    <!-- External JS -->
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>
