@@ -27,3 +27,7 @@ def manning_rota(request, date, shift_type):
     rota_key = f"{date}_{shift_type}"
     rota = rota_data.get(rota_key, [])  # Get rota for the specific date/shift, or empty list if not found
     return render(request, "shifts/manning_rota.html", {"date": date, "shift_type": shift_type, "rota": rota})
+
+
+def shift_detail(request):
+    return render(request, "shifts/shift_detail.html")

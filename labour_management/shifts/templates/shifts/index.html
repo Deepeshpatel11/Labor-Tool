@@ -20,8 +20,14 @@
                     <td>{{ shift.shift_type }}</td>
                     <td>{{ shift.staffing }}</td>
                     <td><a href="{% url 'manning_rota' shift.date shift.shift_type %}">View Rota</a></td>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Test link for OT assignment page -->
+    <a href="{% url 'shift_detail' %}">
+        <button>Test Manual OT Assignment</button>
+    </a>
 {% endblock %}

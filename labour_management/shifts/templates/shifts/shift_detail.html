@@ -1,0 +1,51 @@
+{% extends "labour_management/base.html" %}
+
+{% block title %}Shift Detail{% endblock %}
+
+{% block content %}
+<h1>Shift Manning Sheet</h1>
+
+<!-- Sample area for deployed employees -->
+<h2>Scheduled Employees</h2>
+<p>This section will show who is working where (pre-filled from default shift).</p>
+
+<!-- New: Overtime Assignment Section -->
+<h2>Overtime Assignment</h2>
+<form method="post">
+    {% csrf_token %}
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Work Area</th>
+                <th>Assign Overtime Cover</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Technician</td>
+                <td>Process</td>
+                <td>
+                    <select name="ot_technician_process">
+                        <option value="">-- Select OT Employee --</option>
+                        <option value="1">Alice (Green Shift)</option>
+                        <option value="2">David (Blue Shift)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Packer</td>
+                <td>Multipack</td>
+                <td>
+                    <select name="ot_packer_multipack">
+                        <option value="">-- Select OT Employee --</option>
+                        <option value="3">Sarah (Blue Shift)</option>
+                        <option value="4">Jake (Yellow Shift)</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Save Overtime</button>
+</form>
+{% endblock %}
