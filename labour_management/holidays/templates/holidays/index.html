@@ -1,10 +1,57 @@
-{% extends "labour_management/base.html" %}
+<!-- templates/holidays/index.html -->
+{% extends 'labour_management/base.html' %}
 
-{% block title %}Holidays{% endblock %}
+{% block title %}Holiday Rota{% endblock %}
 
 {% block content %}
-    <h1>Holiday Requests</h1>
-    <p>This is the holiday booking and approval section.</p>
-    <a href="{% url 'holiday_request' %}"><button>Request a Holiday</button></a>
-    <a href="{% url 'holiday_approvals' %}"><button>Approve Holidays</button></a>
+<h1 class="page-title">Holiday Rota</h1>
+
+<div class="action-bar">
+  <button id="requestLeaveBtn" class="btn-add">Request Leave</button>
+</div>
+
+<div class="holiday-table-wrapper">
+  <table class="holiday-table">
+    <thead>
+      <tr>
+        <th>GPID</th>
+        <th>Full Name</th>
+        <th>Shift</th>
+        <th>Role</th>
+        <th>Area</th>
+        <!-- Dynamically inserted dates -->
+      </tr>
+    </thead>
+    <tbody id="holidayTableBody">
+      <!-- Placeholder row example -->
+      <tr>
+        <td>111111111</td>
+        <td>Example Employee</td>
+        <td>Red</td>
+        <td>General Operator</td>
+        <td>Process</td>
+        <!-- Dates will be filled dynamically via JS -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Request Leave Modal -->
+<div id="leaveModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Request Leave</h2>
+    <form id="leaveForm">
+      <label for="leaveType">Leave Type:</label>
+      <select id="leaveType" name="leaveType">
+        <option value="Holiday">Holiday</option>
+        <option value="Sick">Sick</option>
+        <option value="Carers">Carers Leave</option>
+      </select>
+      <label for="leaveDate">Select Date:</label>
+      <input type="date" id="leaveDate" name="leaveDate" required />
+      <button type="submit" class="btn-add">Submit</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
