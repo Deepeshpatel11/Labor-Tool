@@ -1,8 +1,73 @@
 {% extends "labour_management/base.html" %}
-
+{% load static %}
 {% block title %}Employees{% endblock %}
-
 {% block content %}
-    <h1>Employee Page</h1>
-    <p>This is the employee section.</p>
+
+<link rel="stylesheet" href="{% static 'css/employee.css' %}">
+<script src="{% static 'js/employee.js' %}" defer></script>
+
+<h1 class="page-title">Employee Database</h1>
+
+<!-- Add Employee Button -->
+<div class="action-bar">
+  <button class="btn-add" onclick="openAddForm()">+ Add Employee</button>
+</div>
+
+<!-- Employee Table -->
+<div class="table-container">
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>GPID</th>
+        <th>Shift</th>
+        <th>Role</th>
+        <th>Area</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>12345</td>
+        <td>Red</td>
+        <td>Operator</td>
+        <td>Primary Packaging</td>
+        <td><span class="status-active">Active</span></td>
+        <td>
+          <button class="btn-edit" onclick="openEditForm()">Edit</button>
+          <button class="btn-delete" onclick="confirmDelete()">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Edit Form Modal -->
+<div id="editFormModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeEditForm()">&times;</span>
+    <h2>Edit Employee</h2>
+    <form>
+      <label>Full Name:</label>
+      <input type="text" placeholder="John Doe">
+      <label>GPID:</label>
+      <input type="text" placeholder="12345">
+      <label>Shift:</label>
+      <input type="text" placeholder="Red">
+      <label>Role:</label>
+      <input type="text" placeholder="Operator">
+      <label>Area:</label>
+      <input type="text" placeholder="Primary Packaging">
+      <label>Status:</label>
+      <select>
+        <option>Active</option>
+        <option>Inactive</option>
+      </select>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</div>
+
 {% endblock %}
