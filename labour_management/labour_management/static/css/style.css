@@ -35,5 +35,53 @@ th, td {
     padding: 20px;
 }
 
+
+/* Container to hold all lines and sections in a row with wrapping */
+.rota-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    padding: 20px;
+  }
   
+  /* Each column (line) */
+  .line-column {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex: 1 1 300px; /* Makes it responsive */
+    min-width: 280px;
+  }
+  
+  /* Style for each table */
+  .rota-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .rota-table th,
+  .rota-table td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+  }
+  
+  .rota-table thead {
+    background-color: #f1f1f1;
+  }
+  
+  h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .manning-rota {
+    margin: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #003366;
+  }
   
