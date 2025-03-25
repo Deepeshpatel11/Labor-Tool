@@ -3,31 +3,55 @@
 {% block title %}Shift Schedule{% endblock %}
 
 {% block content %}
-    <h1>Shift Schedule</h1>
-    <table border="1" width="100%">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Shift Type</th>
-                <th>Staffing Level</th>
-                <th>View Manning Rota</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for shift in shifts %}
-                <tr>
-                    <td>{{ shift.date }}</td>
-                    <td>{{ shift.shift_type }}</td>
-                    <td>{{ shift.staffing }}</td>
-                    <td><a href="{% url 'manning_rota' shift.date shift.shift_type %}">View Rota</a></td>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h1>Shift Schedule</h1>
 
-    <!-- Test link for OT assignment page -->
-    <a href="{% url 'shift_detail' %}">
-        <button>Test Manual OT Assignment</button>
-    </a>
+<div class="action-bar">
+    <button id="openCreateShiftModal" class="btn-add">Create New Shift</button>
+</div>
+  
+
+<table class="employee-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Shift Type</th>
+            <th>Shift</th>
+            <th>Staffing Level</th>
+            <th>View Manning Rota</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for shift in shifts %}
+        <tr>
+            <td>{{ shift.date }}</td>
+            <td>{{ shift.shift_type }}</td>
+            <td class="shift-name" data-date="{{ shift.date }}" data-type="{{ shift.shift_type }}">Loading...</td>
+            <td>{{ shift.staffing }}</td>
+            <td><a href="{% url 'manning_rota' shift.date shift.shift_type %}">View Rota</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal for Creating Shift -->
+<div id="createShiftModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModalBtn">&times;</span>
+      <h3>Create New Shift</h3>
+      <form id="createShiftForm">
+        <label for="shiftDate">Date:</label>
+        <input type="date" id="shiftDate" name="shiftDate" required>
+  
+        <label for="shiftType">Shift Type:</label>
+        <select id="shiftType" name="shiftType" required>
+          <option value="Day">Day</option>
+          <option value="Night">Night</option>
+        </select>
+  
+        <button type="submit">Create Shift</button>
+      </form>
+    </div>
+  </div>
+  
+
 {% endblock %}

@@ -5,7 +5,7 @@ shifts_data = [
     {"date": "2025-03-20", "shift_type": "Day", "staffing": "Normal"},
     {"date": "2025-03-20", "shift_type": "Night", "staffing": "Understaffed"},
     {"date": "2025-03-21", "shift_type": "Day", "staffing": "Normal"},
-    {"date": "2025-03-21", "shift_type": "Night", "staffing": "Full"},
+    {"date": "2025-03-24", "shift_type": "Night", "staffing": "Full"},
 ]
 
 # Sample manning rota data
