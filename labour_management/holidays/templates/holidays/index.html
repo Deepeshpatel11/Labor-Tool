@@ -3,50 +3,85 @@
 {% block title %}Holiday Rota{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="page-title">Holiday Rota</h1>
-    <div class="action-bar">
-        <button id="openModalBtn" class="btn-add">Request Leave</button>
-    </div>
+<h1 class="page-title">Holiday Rota</h1>
+<div class="action-bar">
+    <button id="btnAdd" class="btn-add">Request Leave</button>
+</div>
 
-    <div class="table-container">
-        <table id="holiday-table" class="holiday-table">
-            <thead>
-                <tr>
-                    <th>GPID</th>
-                    <th>Full Name</th>
-                    <th>Shift</th>
-                    <th>Role</th>
-                    <th>Area</th>
-                    <!-- Dates will be dynamically inserted here via JS -->
-                </tr>
-            </thead>
-            <tbody id="holidayTableBody">
-                <!-- Populated dynamically -->
-            </tbody>
-        </table>
-    </div>
+<div class="holiday-filters">
+    <input type="text" id="filterName" placeholder="Search by name..." />
+    <select id="filterShift">
+        <option value="">All Shifts</option>
+        <option value="Red">Red</option>
+        <option value="Green">Green</option>
+        <option value="Blue">Blue</option>
+        <option value="Yellow">Yellow</option>
+    </select>
+    <select id="filterRole">
+        <option value="">All Roles</option>
+        <option value="General Support Operator">General Support Operator</option>
+        <option value="General Operator">General Operator</option>
+        <option value="Manufacturing Technician">Manufacturing Technician</option>
+        <option value="Shift Technician">Shift Technician</option>
+    </select>
+    <select id="filterArea">
+        <option value="">All Areas</option>
+        <option value="Process">Process</option>
+        <option value="Primary Packaging">Primary Packaging</option>
+        <option value="Multipack Packaging">Multipack Packaging</option>
+        <option value="Palletising">Palletising</option>
+        <option value="Despatch">Despatch</option>
+        <option value="Other">Other</option>
+    </select>
+    <select id="filterStatus">
+        <option value="">All Statuses</option>
+        <option value="Approved">Approved</option>
+        <option value="Pending">Pending</option>
+    </select>
+</div>
+  
+<div class="holiday-scroll-container">
+    <table class="holiday-table">
+        <thead>
+            <tr>
+                <th class="sticky-col">GPID</th>
+                <th class="sticky-col">Full Name</th>
+                <th class="sticky-col">Shift</th>
+                <th class="sticky-col">Role</th>
+                <th class="sticky-col">Area</th>
+                <!-- Dynamically inserted dates -->
+            </tr>
+        </thead>
+        <tbody id="holidayTableBody">
+            <!-- Example row -->
+            <tr>
+                <td class="sticky-col">11111111</td>
+                <td class="sticky-col">Example Employee</td>
+                <td class="sticky-col">Red</td>
+                <td class="sticky-col">General Operator</td>
+                <td class="sticky-col">Process</td>
+                <!-- Dates will be filled dynamically -->
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-    <!-- Request Leave Modal -->
-    <div id="leaveModal" class="modal">
-        <div class="modal-content">
-            <span class="closeModal">&times;</span>
-            <h3>Request Leave</h3>
-            <form id="leaveRequestForm">
-                <label for="leaveType">Leave Type:</label>
-                <select id="leaveType" name="leaveType" required>
-                    <option value="">Select</option>
-                    <option value="Holiday">Holiday</option>
-                    <option value="Sick">Sick</option>
-                    <option value="Carers">Carers Leave</option>
-                </select>
-
-                <label for="leaveDate">Select Date:</label>
-                <input type="date" id="leaveDate" name="leaveDate" required min="2025-01-01" max="2025-12-31" />
-
-                <button type="submit" class="btn-add">Submit</button>
-            </form>
-        </div>
+<!-- Request Leave Modal -->
+<div id="leaveModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h3>Request Leave</h3>
+        <form id="leaveForm">
+            <label for="leaveType">Leave Type:</label>
+            <select id="leaveType" name="leaveType">
+                <option value="holiday">Holiday</option>
+                <option value="sick">Sick</option>
+                <option value="carers">Carers Leave</option>
+            </select>
+            <label for="leaveDate">Select Date:</label>
+            <input type="date" id="leaveDate" name="leaveDate" required />
+            <button type="submit" class="btn-add">Submit</button>
+        </form>
     </div>
 </div>
 {% endblock %}

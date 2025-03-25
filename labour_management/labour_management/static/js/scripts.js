@@ -67,66 +67,97 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Holiday Table Dynamic Header & Row Fill
 
-// ----- Dynamically Insert Dates into Table Header -----
-function generateDateHeaders() {
-  const theadRow = document.querySelector('#holiday-table thead tr');
-  const startDate = new Date('2025-01-01');
-  const endDate = new Date('2025-12-31');
+document.addEventListener('DOMContentLoaded', () => {
+  const tableHeader = document.querySelector('.holiday-table thead tr');
+  const tableBody = document.getElementById('holidayTableBody');
 
-  while (startDate <= endDate) {
-      const th = document.createElement('th');
-      th.textContent = startDate.toLocaleDateString('en-GB');
-      theadRow.appendChild(th);
-      startDate.setDate(startDate.getDate() + 1);
+  const today = new Date('2025-01-01');
+  const daysToShow = 31; // Example: show January 2025
+
+  // Insert dynamic headers
+  for (let i = 0; i < daysToShow; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    const dateStr = date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }).replace(/\//g, '/');
+
+    const th = document.createElement('th');
+    th.textContent = dateStr;
+    tableHeader.appendChild(th);
   }
-}
 
-// ----- Open/Close Modal -----
-document.getElementById("openModalBtn").addEventListener("click", () => {
-  document.getElementById("leaveModal").style.display = "block";
-});
-document.querySelector(".closeModal").addEventListener("click", () => {
-  document.getElementById("leaveModal").style.display = "none";
-});
+  // Populate one example row dynamically
+  const row = tableBody.querySelector('tr');
+  for (let i = 0; i < daysToShow; i++) {
+    const td = document.createElement('td');
+    if (i === 22) td.textContent = 'Holiday';
+    row.appendChild(td);
+  }
 
-// ----- Submit Holiday Request -----
-document.getElementById("leaveRequestForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+  // Modal logic for holiday request
+  const modal = document.getElementById('leaveModal');
+  const openBtn = document.getElementById('btnAdd');
+  const closeBtn = document.getElementById('closeModal');
 
-  const gpid = "11111111"; // Placeholder
-  const name = "Example Employee";
-  const shift = "Red";
-  const role = "General Operator";
-  const area = "Process";
-  const leaveType = document.getElementById("leaveType").value;
-  const leaveDate = document.getElementById("leaveDate").value;
+  if (openBtn && modal && closeBtn) {
+    openBtn.addEventListener('click', () => {
+      modal.style.display = 'block';
+    });
 
-  const newRow = document.createElement("tr");
-  newRow.innerHTML = `
-      <td>${gpid}</td>
-      <td>${name}</td>
-      <td>${shift}</td>
-      <td>${role}</td>
-      <td>${area}</td>
-  `;
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
 
-  // Loop through 365 dates and insert blank or leave label
-  const start = new Date('2025-01-01');
-  const end = new Date('2025-12-31');
-  while (start <= end) {
-      const td = document.createElement("td");
-      if (start.toISOString().slice(0, 10) === leaveDate) {
-          td.textContent = leaveType;
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
       }
-      newRow.appendChild(td);
-      start.setDate(start.getDate() + 1);
+    });
   }
-
-  document.getElementById("holidayTableBody").appendChild(newRow);
-  document.getElementById("leaveModal").style.display = "none";
-  this.reset();
 });
 
-// ----- Run on Page Load -----
-window.addEventListener("DOMContentLoaded", generateDateHeaders);
+
+// Holiday filter logic
+document.addEventListener("DOMContentLoaded", () => {
+  const nameFilter = document.getElementById("filterName");
+  const shiftFilter = document.getElementById("filterShift");
+  const roleFilter = document.getElementById("filterRole");
+  const areaFilter = document.getElementById("filterArea");
+  const statusFilter = document.getElementById("filterStatus");
+
+  const filterRows = () => {
+    const rows = document.querySelectorAll("#holidayTableBody tr");
+    rows.forEach(row => {
+      const name = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
+      const shift = row.querySelector("td:nth-child(3)")?.textContent || "";
+      const role = row.querySelector("td:nth-child(4)")?.textContent || "";
+      const area = row.querySelector("td:nth-child(5)")?.textContent || "";
+
+      const hasPending = row.innerHTML.includes('Pending');
+      const hasApproved = row.innerHTML.includes('Approved');
+
+      let statusMatch = true;
+      if (statusFilter.value === "Pending") statusMatch = hasPending;
+      if (statusFilter.value === "Approved") statusMatch = hasApproved;
+
+      const isVisible =
+        name.includes(nameFilter.value.toLowerCase()) &&
+        (shiftFilter.value === "" || shift === shiftFilter.value) &&
+        (roleFilter.value === "" || role === roleFilter.value) &&
+        (areaFilter.value === "" || area === areaFilter.value) &&
+        statusMatch;
+
+      row.style.display = isVisible ? "" : "none";
+    });
+  };
+
+  [nameFilter, shiftFilter, roleFilter, areaFilter, statusFilter].forEach(input => {
+    input.addEventListener("input", filterRows);
+    input.addEventListener("change", filterRows);
+  });
+});

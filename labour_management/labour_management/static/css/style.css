@@ -208,41 +208,120 @@ th {
 }
 
 /* Holidays Page */
-.holiday-table-container {
+/* Holiday Scrollable Table Wrapper */
+.holiday-scroll-container {
   overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .holiday-table {
+  border-collapse: collapse;
   width: max-content;
   min-width: 100%;
-  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.holiday-table th,
+.holiday-table td {
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  text-align: center;
+  background-color: white;
   white-space: nowrap;
+}
+
+/* Allow text wrapping and break long words in first 5 columns */
+.holiday-table td:nth-child(-n+5),
+.holiday-table th:nth-child(-n+5) {
+  white-space: normal;
+  word-break: break-word;
+  text-align: left;
+  padding: 10px;
+  min-width: 100px;
+}
+
+
+/* Header row */
+.holiday-table th {
+  background-color: #f0f9fa;
+  font-weight: bold;
+  font-size: 14px;
+  z-index: 1;
+  position: sticky;
+  top: 0;
+}
+
+/* Sticky first 5 columns */
+.holiday-table td:nth-child(1),
+.holiday-table th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 2;
   background-color: white;
 }
 
-.holiday-table thead th {
+.holiday-table td:nth-child(2),
+.holiday-table th:nth-child(2) {
   position: sticky;
-  top: 0;
-  background-color: #f0f9fa;
+  left: 100px;
   z-index: 2;
-  text-align: center;
+  background-color: white;
 }
 
-.holiday-table td {
-  text-align: center;
-  font-size: 13px;
+.holiday-table td:nth-child(3),
+.holiday-table th:nth-child(3) {
+  position: sticky;
+  left: 200px;
+  z-index: 2;
+  background-color: white;
 }
 
-.btn-approve {
-  background-color: #28a745;
-  color: white;
-  padding: 5px 8px;
-  border: none;
+.holiday-table td:nth-child(4),
+.holiday-table th:nth-child(4) {
+  position: sticky;
+  left: 300px;
+  z-index: 2;
+  background-color: white;
+}
+
+.holiday-table td:nth-child(5),
+.holiday-table th:nth-child(5) {
+  position: sticky;
+  left: 400px;
+  z-index: 2;
+  background-color: white;
+}
+
+/* Holiday filters */
+.holiday-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.holiday-filters input,
+.holiday-filters select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
 }
 
-.btn-approve:hover {
-  background-color: #218838;
+.leave-approved {
+  background-color: #d4edda; /* light green */
+  color: #155724;
+  font-weight: bold;
 }
+
+.leave-pending {
+  background-color: #fff3cd; /* light yellow */
+  color: #856404;
+  font-weight: bold;
+}
+
