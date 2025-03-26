@@ -198,3 +198,28 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("change", filterRows);
   });
 });
+
+
+// JavaScript for skills/index.html modal actions
+
+function openAddSkillModal() {
+  document.getElementById('addSkillModal').style.display = 'block';
+}
+
+function closeAddSkillModal() {
+  document.getElementById('addSkillModal').style.display = 'none';
+}
+
+function openEditSkillModal() {
+  document.getElementById('editSkillModal').style.display = 'block';
+}
+
+function closeEditSkillModal() {
+  document.getElementById('editSkillModal').style.display = 'none';
+}
+
+function confirmDeleteSkill() {
+  if (confirm("Are you sure you want to delete this skill profile? This action cannot be undone.")) {
+    alert("Skill profile deleted (placeholder logic)");
+  }
+}

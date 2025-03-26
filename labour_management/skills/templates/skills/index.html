@@ -1,33 +1,70 @@
-{% extends "labour_management/base.html" %}
-
+{% extends 'labour_management/base.html' %}
 {% block title %}Skills Matrix{% endblock %}
 
 {% block content %}
-    <h1>Skills Matrix</h1>
-    <table border="1" width="100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Shift</th>
-                <th>Role</th>
-                <th>Primary Skill</th>
-                <th>Secondary Skill</th>
-                <th>Tertiary Skill</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for emp in skills %}
-                <tr>
-                    <td>{{ emp.name }}</td>
-                    <td>{{ emp.shift }}</td>
-                    <td>{{ emp.role }}</td>
-                    <td>{{ emp.primary_skill }}</td>
-                    <td>{{ emp.secondary_skill|default:"-" }}</td>
-                    <td>{{ emp.tertiary_skill|default:"-" }}</td>
-                </tr>
-            {% empty %}
-                <tr><td colspan="6">No skill data available.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container">
+  <h1 class="page-title">Skills Matrix</h1>
+  <div class="action-bar">
+    <button class="btn-add" onclick="openAddSkillModal()">Add Skill</button>
+  </div>
+
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>GPID</th>
+        <th>Employee Name</th>
+        <th>Primary Skill</th>
+        <th>Additional Skills</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="skillsTableBody">
+      <!-- Placeholder row -->
+      <tr>
+        <td>1111111</td>
+        <td>Example Employee</td>
+        <td>Slicing</td>
+        <td>Fryer, Packing, Seasoning</td>
+        <td>
+          <button class="btn-edit" onclick="openEditSkillModal()">Edit</button>
+          <button class="btn-delete" onclick="confirmDeleteSkill()">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Skill Modal -->
+<div id="addSkillModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeAddSkillModal()">&times;</span>
+    <h3>Add Skill</h3>
+    <form>
+      <label>GPID:</label>
+      <input type="text" required><br><br>
+      <label>Employee Name:</label>
+      <input type="text" required><br><br>
+      <label>Primary Skill:</label>
+      <input type="text" required><br><br>
+      <label>Additional Skills (comma separated):</label>
+      <input type="text"><br><br>
+      <button type="submit" class="btn-add">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Skill Modal -->
+<div id="editSkillModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeEditSkillModal()">&times;</span>
+    <h3>Edit Skill</h3>
+    <form>
+      <label>Primary Skill:</label>
+      <input type="text" required><br><br>
+      <label>Additional Skills (comma separated):</label>
+      <input type="text"><br><br>
+      <button type="submit" class="btn-add">Update</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
