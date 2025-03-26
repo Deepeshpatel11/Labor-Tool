@@ -325,3 +325,37 @@ th {
   font-weight: bold;
 }
 
+.btn-approve {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Approve leave modal */
+.btn-approve-small,
+.btn-reject-small {
+  padding: 5px 8px;
+  margin: 5px 2px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-approve-small {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-reject-small {
+  background-color: #dc3545;
+  color: white;
+}
+
+.pending-request {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}

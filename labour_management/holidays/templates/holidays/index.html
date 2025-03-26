@@ -6,6 +6,8 @@
 <h1 class="page-title">Holiday Rota</h1>
 <div class="action-bar">
     <button id="btnAdd" class="btn-add">Request Leave</button>
+    <button class="btn-approve" id="approveLeaveBtn">Approve Leave</button>
+
 </div>
 
 <div class="holiday-filters">
@@ -84,4 +86,24 @@
         </form>
     </div>
 </div>
+
+<!-- Approve Leave Modal -->
+<div id="approveModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeApproveModal">&times;</span>
+      <h3>Pending Leave Requests</h3>
+      <div id="pendingRequestsList">
+        <!-- Example placeholder data -->
+        <div class="pending-request">
+          <p><strong>Example Emp:</strong> John Doe</p>
+          <p><strong>Date:</strong> 2025-06-10</p>
+          <p><strong>Type:</strong> Annual Leave</p>
+          <p><strong>Submitted:</strong> 2025-03-25 09:21 AM</p>
+          <button class="btn-approve-small">Approve</button>
+          <button class="btn-reject-small">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 {% endblock %}
