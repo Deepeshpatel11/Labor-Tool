@@ -190,6 +190,11 @@ th {
 .line-column:nth-child(6) { background-color: #e8f5e9; }
 .line-column:nth-child(7) { background-color: #fce4ec; }
 
+
+/* ensure hidden by default */
+.scenario-block { display: none; }
+
+
 @media (max-width: 768px) {
   .rota-container {
     flex-direction: column;

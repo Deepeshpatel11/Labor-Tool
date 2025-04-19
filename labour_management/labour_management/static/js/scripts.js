@@ -22,49 +22,81 @@ function confirmDelete() {
 // JavaScript for Shift/index.html
 
 document.addEventListener("DOMContentLoaded", function () {
+  // --- Existing shift‐name calculation ---
   const startDate = new Date("2024-12-29"); // Green (Day), Red (Night)
   const shiftNames = {
-    Day: ["Green", "Green", "Green", "Green", "Blue", "Blue", "Blue", "Blue"],
-    Night: ["Red", "Red", "Red", "Red", "Yellow", "Yellow", "Yellow", "Yellow"]
+    Day:   ["Green","Green","Green","Green","Blue","Blue","Blue","Blue"],
+    Night: ["Red","Red","Red","Red","Yellow","Yellow","Yellow","Yellow"]
   };
 
-  const cells = document.querySelectorAll(".shift-name");
-
-  cells.forEach(cell => {
+  document.querySelectorAll(".shift-name").forEach(cell => {
     const date = new Date(cell.dataset.date);
     const type = cell.dataset.type;
-
     const diffDays = Math.floor((date - startDate) / (1000 * 60 * 60 * 24));
     const cycleIndex = diffDays % 8;
-
-    const shift = shiftNames[type] ? shiftNames[type][cycleIndex] : "N/A";
-    cell.textContent = shift;
+    cell.textContent = shiftNames[type]?.[cycleIndex] ?? "N/A";
   });
-});
 
-
-// Modal open/close logic - create shift rota
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('createShiftModal');
-  const openBtn = document.getElementById('openCreateShiftModal');
+  // --- Modal open/close logic ---
+  const modal    = document.getElementById('createShiftModal');
+  const openBtn  = document.getElementById('openCreateShiftModal');
   const closeBtn = document.getElementById('closeModalBtn');
+  if (modal && openBtn && closeBtn) {
+    openBtn.addEventListener('click', () => modal.style.display = 'block');
+    closeBtn.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+  }
 
-  if (openBtn && closeBtn && modal) {
-    openBtn.addEventListener('click', () => {
-      modal.style.display = 'block';
-    });
+  // --- Create Shift form submission handler ---
+  const form = document.getElementById('createShiftForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-    closeBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
+      // 1. Read date & shift type
+      const date      = encodeURIComponent(this.querySelector('#shiftDate').value);
+      const shiftType = encodeURIComponent(this.querySelector('#shiftType').value);
 
-    window.addEventListener('click', (event) => {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
+      // 2. Gather scenario selections for lines 1–4
+      const params = [];
+      [1,2,3,4].forEach(i => {
+        const sel = this.querySelector(`#scenario${i}`);
+        if (sel && sel.value) {
+          params.push(`scenario${i}=${encodeURIComponent(sel.value)}`);
+        }
+      });
+
+      // 3. Build query string and redirect
+      const qs = params.join('&');
+      window.location.href = `/shifts/rota/${date}/${shiftType}/?${qs}`;
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 1) Hide every scenario block up front
+  document.querySelectorAll('.scenario-block').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  // 2) Grab the query params
+  const params = new URLSearchParams(window.location.search);
+
+  // 3) For each line, un-hide the matching scenario
+  [1, 2, 3, 4].forEach(lineNum => {
+    const chosen = params.get(`scenario${lineNum}`);
+    if (!chosen) return;    // nothing selected for this line
+
+    document
+      .querySelectorAll(`.line-column[data-line="${lineNum}"] .scenario-block`)
+      .forEach(block => {
+        if (block.dataset.scenario === chosen) {
+          block.style.display = '';    // show matching block
+        }
+      });
+  });
+});
+
 
 
 // Holiday Table Dynamic Header & Row Fill
