@@ -21,81 +21,103 @@ function confirmDelete() {
 
 // JavaScript for Shift/index.html
 
-document.addEventListener("DOMContentLoaded", function () {
-  // --- Existing shift‐name calculation ---
-  const startDate = new Date("2024-12-29"); // Green (Day), Red (Night)
+document.addEventListener("DOMContentLoaded", () => {
+  //
+  // 1) Calculate and fill shift names (Day/Night cycle)
+  //
+  const startDate = new Date("2024-12-29");
   const shiftNames = {
     Day:   ["Green","Green","Green","Green","Blue","Blue","Blue","Blue"],
     Night: ["Red","Red","Red","Red","Yellow","Yellow","Yellow","Yellow"]
   };
 
   document.querySelectorAll(".shift-name").forEach(cell => {
-    const date = new Date(cell.dataset.date);
-    const type = cell.dataset.type;
-    const diffDays = Math.floor((date - startDate) / (1000 * 60 * 60 * 24));
-    const cycleIndex = diffDays % 8;
-    cell.textContent = shiftNames[type]?.[cycleIndex] ?? "N/A";
+    const date    = new Date(cell.dataset.date);
+    const type    = cell.dataset.type;
+    const diff    = Math.floor((date - startDate) / (1000*60*60*24));
+    const index   = ((diff % 8) + 8) % 8; // ensure positive
+    cell.textContent = shiftNames[type]?.[index] ?? "N/A";
   });
 
-  // --- Modal open/close logic ---
+
+  //
+  // 2) Create‑Shift modal open/close
+  //
   const modal    = document.getElementById('createShiftModal');
   const openBtn  = document.getElementById('openCreateShiftModal');
   const closeBtn = document.getElementById('closeModalBtn');
+
   if (modal && openBtn && closeBtn) {
-    openBtn.addEventListener('click', () => modal.style.display = 'block');
+    openBtn.addEventListener('click',  () => modal.style.display = 'block');
     closeBtn.addEventListener('click', () => modal.style.display = 'none');
-    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+    window.addEventListener('click', e => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
   }
 
-  // --- Create Shift form submission handler ---
+
+  //
+  // 3) Handle Create‑Shift form submit → redirect with scenario params
+  //
   const form = document.getElementById('createShiftForm');
   if (form) {
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', e => {
       e.preventDefault();
 
-      // 1. Read date & shift type
-      const date      = encodeURIComponent(this.querySelector('#shiftDate').value);
-      const shiftType = encodeURIComponent(this.querySelector('#shiftType').value);
+      const date      = encodeURIComponent(form.querySelector('#shiftDate').value);
+      const shiftType = encodeURIComponent(form.querySelector('#shiftType').value);
 
-      // 2. Gather scenario selections for lines 1–4
-      const params = [];
-      [1,2,3,4].forEach(i => {
-        const sel = this.querySelector(`#scenario${i}`);
-        if (sel && sel.value) {
-          params.push(`scenario${i}=${encodeURIComponent(sel.value)}`);
-        }
-      });
+      // gather each scenario# value
+      const params = [1,2,3,4].map(i => {
+        const sel = form.querySelector(`#scenario${i}`);
+        return sel && sel.value
+          ? `scenario${i}=${encodeURIComponent(sel.value)}`
+          : null;
+      }).filter(x => x);
 
-      // 3. Build query string and redirect
       const qs = params.join('&');
       window.location.href = `/shifts/rota/${date}/${shiftType}/?${qs}`;
     });
   }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-  // 1) Hide every scenario block up front
+
+  //
+  // 4) Show only matching scenario‑blocks in manning_rota.html
+  //
+  console.log('Rota page loaded, URL:', window.location.search);
+
+  // 4.1) Hide all scenarios up front
   document.querySelectorAll('.scenario-block').forEach(el => {
     el.style.display = 'none';
   });
+  console.log('All scenario-blocks are now hidden.');
 
-  // 2) Grab the query params
-  const params = new URLSearchParams(window.location.search);
+  // 4.2) Read the chosen scenarios from the query string
+  const qsParams = new URLSearchParams(window.location.search);
 
-  // 3) For each line, un-hide the matching scenario
-  [1, 2, 3, 4].forEach(lineNum => {
-    const chosen = params.get(`scenario${lineNum}`);
-    if (!chosen) return;    // nothing selected for this line
+  [1,2,3,4].forEach(lineNum => {
+    const chosen = qsParams.get(`scenario${lineNum}`);
+    console.log(`Line ${lineNum} → chosen scenario =`, chosen);
 
-    document
-      .querySelectorAll(`.line-column[data-line="${lineNum}"] .scenario-block`)
-      .forEach(block => {
-        if (block.dataset.scenario === chosen) {
-          block.style.display = '';    // show matching block
-        }
-      });
+    if (!chosen) {
+      console.log(`  → skipping line ${lineNum} (no param)`);
+      return;
+    }
+
+    const selector = `.line-column[data-line="${lineNum}"] .scenario-block`;
+    const blocks = document.querySelectorAll(selector);
+    console.log(`  → found ${blocks.length} blocks for line ${lineNum}`);
+
+    blocks.forEach(block => {
+      console.log('    • block scenario =', block.dataset.scenario);
+      if (block.dataset.scenario === chosen) {
+        block.style.display = 'block';   // explicitly un-hide
+        console.log('      ✔ showing this block');
+      }
+    });
   });
 });
+
 
 
 
