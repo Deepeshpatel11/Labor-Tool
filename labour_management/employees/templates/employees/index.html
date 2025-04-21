@@ -1,73 +1,48 @@
+{# employees/templates/employees/index.html #}
 {% extends "labour_management/base.html" %}
-{% load static %}
 {% block title %}Employees{% endblock %}
+
 {% block content %}
+  <div class="container py-4">
+    <h1>Employee Database</h1>
+    <p><a href="{% url 'employees_create' %}" class="btn btn-primary">+ Add Employee</a></p>
 
-<link rel="stylesheet" href="{% static 'css/employee.css' %}">
-<script src="{% static 'js/employee.js' %}" defer></script>
-
-<h1 class="page-title">Employee Database</h1>
-
-<!-- Add Employee Button -->
-<div class="action-bar">
-  <button class="btn-add" onclick="openAddForm()">+ Add Employee</button>
-</div>
-
-<!-- Employee Table -->
-<div class="table-container">
-  <table class="employee-table">
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>GPID</th>
-        <th>Shift</th>
-        <th>Role</th>
-        <th>Area</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John Doe</td>
-        <td>12345</td>
-        <td>Red</td>
-        <td>Operator</td>
-        <td>Primary Packaging</td>
-        <td><span class="status-active">Active</span></td>
-        <td>
-          <button class="btn-edit" onclick="openEditForm()">Edit</button>
-          <button class="btn-delete" onclick="confirmDelete()">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- Edit Form Modal -->
-<div id="editFormModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeEditForm()">&times;</span>
-    <h2>Edit Employee</h2>
-    <form>
-      <label>Full Name:</label>
-      <input type="text" placeholder="John Doe">
-      <label>GPID:</label>
-      <input type="text" placeholder="12345">
-      <label>Shift:</label>
-      <input type="text" placeholder="Red">
-      <label>Role:</label>
-      <input type="text" placeholder="Operator">
-      <label>Area:</label>
-      <input type="text" placeholder="Primary Packaging">
-      <label>Status:</label>
-      <select>
-        <option>Active</option>
-        <option>Inactive</option>
-      </select>
-      <button type="submit">Save Changes</button>
-    </form>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>GPID</th>
+          <th>Shift</th>
+          <th>Role</th>
+          <th>Area</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for emp in employees %}
+          <tr>
+            <td>{{ emp.user.get_full_name }}</td>
+            <td>{{ emp.gpid }}</td>
+            <td>{{ emp.shift }}</td>
+            <td>{{ emp.role }}</td>
+            <td>{{ emp.area }}</td>
+            <td>
+              {% if emp.active %}
+                <span class="text-success">Active</span>
+              {% else %}
+                <span class="text-danger">Inactive</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'employees_update' emp.pk %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'employees_delete' emp.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7">No employees yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-</div>
-
 {% endblock %}
