@@ -1,20 +1,23 @@
+{# employees/templates/employees/employee_form.html #}
 {% extends "labour_management/base.html" %}
+
 {% block title %}
-  {% if object %}Edit Employee{% else %}Add Employee{% endif %}
+  {% if form.instance.pk %}Edit{% else %}Add{% endif %} Employee
 {% endblock %}
 
 {% block content %}
-  <div class="container py-4">
-    <h1>
-      {% if object %}Edit Employee{% else %}Add Employee{% endif %}
-    </h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">
-        {% if object %}Save Changes{% else %}Create Employee{% endif %}
-      </button>
-      <a href="{% url 'employees_index' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-  </div>
+<div class="container py-4">
+  <h1 class="mb-4">
+    {% if form.instance.pk %}Edit{% else %}Add{% endif %} Employee
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+      {% if form.instance.pk %}Save Changes{% else %}Create Employee{% endif %}
+    </button>
+    <a href="{% url 'employees:index' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
 {% endblock %}

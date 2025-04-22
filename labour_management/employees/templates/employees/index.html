@@ -1,11 +1,17 @@
 {# employees/templates/employees/index.html #}
 {% extends "labour_management/base.html" %}
-{% block title %}Employees{% endblock %}
+{% load static %}
+
+{% block title %}Employee Database{% endblock %}
 
 {% block content %}
   <div class="container py-4">
     <h1>Employee Database</h1>
-    <p><a href="{% url 'employees_create' %}" class="btn btn-primary">+ Add Employee</a></p>
+    <p>
+      <a href="{% url 'employees:create' %}" class="btn btn-primary">
+        + Add Employee
+      </a>
+    </p>
 
     <table class="table table-striped">
       <thead>
@@ -35,12 +41,20 @@
               {% endif %}
             </td>
             <td>
-              <a href="{% url 'employees_update' emp.pk %}" class="btn btn-sm btn-warning">Edit</a>
-              <a href="{% url 'employees_delete' emp.pk %}" class="btn btn-sm btn-danger">Delete</a>
+              <a href="{% url 'employees:update' emp.pk %}" 
+                 class="btn btn-sm btn-warning">
+                Edit
+              </a>
+              <a href="{% url 'employees:delete' emp.pk %}" 
+                 class="btn btn-sm btn-danger">
+                Delete
+              </a>
             </td>
           </tr>
         {% empty %}
-          <tr><td colspan="7">No employees yet.</td></tr>
+          <tr>
+            <td colspan="7" class="text-center">No employees yet.</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>

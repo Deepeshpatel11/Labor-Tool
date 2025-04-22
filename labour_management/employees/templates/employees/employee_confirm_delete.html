@@ -1,14 +1,21 @@
+{# employees/templates/employees/employee_confirm_delete.html #}
 {% extends "labour_management/base.html" %}
 {% block title %}Delete Employee{% endblock %}
 
 {% block content %}
-  <div class="container py-4">
-    <h1>Delete Employee</h1>
-    <p>Are you sure you want to delete <strong>{{ object }}</strong>?</p>
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-danger">Yes, delete</button>
-      <a href="{% url 'employees_index' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-  </div>
+<div class="container py-4">
+  <h1>Delete Employee</h1>
+  <p>
+    Are you sure you want to delete
+    <strong>
+      {{ object.user.get_full_name }} ({{ object.gpid }})
+    </strong>?
+  </p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'employees:index' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
 {% endblock %}
