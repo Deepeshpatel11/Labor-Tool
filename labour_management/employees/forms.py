@@ -11,6 +11,7 @@ class EmployeeForm(forms.ModelForm):
             "user",
             "gpid",
             "shift",
+            "role",
             "line",
             "area",
             "active",

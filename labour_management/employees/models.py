@@ -26,6 +26,24 @@ class Employee(models.Model):
         default=SHIFT_GREEN,
     )
 
+    # add Role choices
+    ROLE_GSO = "GSO"
+    ROLE_GO  = "GO"
+    ROLE_MT  = "MT"
+    ROLE_ST  = "ST"
+    ROLE_CHOICES = [
+        (ROLE_GSO, "General Support Operator"),
+        (ROLE_GO,  "General Operator"),
+        (ROLE_MT,  "Manufacturing Technician"),
+        (ROLE_ST,  "Shift Technician"),
+    ]
+    role = models.CharField(
+        max_length=3,
+        choices=ROLE_CHOICES,
+        default=ROLE_GSO,
+        help_text="What type of role this person performs",
+    )
+
     # production line assignment (plus MOH & ALL)
     LINE_1   = "1"
     LINE_2   = "2"

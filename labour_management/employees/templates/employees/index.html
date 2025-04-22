@@ -8,7 +8,7 @@
   <div class="container py-4">
     <h1>Employee Database</h1>
     <p>
-      <a href="{% url 'employees:create' %}" class="btn btn-primary">
+      <a href="{% url 'employees_create' %}" class="btn btn-primary">
         + Add Employee
       </a>
     </p>
@@ -31,7 +31,7 @@
             <td>{{ emp.user.get_full_name }}</td>
             <td>{{ emp.gpid }}</td>
             <td>{{ emp.shift }}</td>
-            <td>{{ emp.role }}</td>
+            <td>{{ emp.get_role_display }}</td>
             <td>{{ emp.area }}</td>
             <td>
               {% if emp.active %}
@@ -41,11 +41,11 @@
               {% endif %}
             </td>
             <td>
-              <a href="{% url 'employees:update' emp.pk %}" 
+              <a href="{% url 'employees_update' emp.pk %}" 
                  class="btn btn-sm btn-warning">
                 Edit
               </a>
-              <a href="{% url 'employees:delete' emp.pk %}" 
+              <a href="{% url 'employees_delete' emp.pk %}" 
                  class="btn btn-sm btn-danger">
                 Delete
               </a>
