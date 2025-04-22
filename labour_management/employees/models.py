@@ -5,7 +5,6 @@ User = get_user_model()
 
 class Employee(models.Model):
     # link to Django’s built‑in User
-    user      = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, unique=True)
     gpid      = models.CharField(max_length=20, unique=True)
 

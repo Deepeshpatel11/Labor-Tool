@@ -28,7 +28,7 @@
       <tbody>
         {% for emp in employees %}
           <tr>
-            <td>{{ emp.user.get_full_name }}</td>
+            <td>{{ emp.full_name }}</td>
             <td>{{ emp.gpid }}</td>
             <td>{{ emp.shift }}</td>
             <td>{{ emp.get_role_display }}</td>

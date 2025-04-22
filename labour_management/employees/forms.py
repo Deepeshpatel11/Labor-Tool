@@ -8,7 +8,7 @@ class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
         fields = [
-            "user",
+            "full_name",
             "gpid",
             "shift",
             "role",
@@ -16,12 +16,3 @@ class EmployeeForm(forms.ModelForm):
             "area",
             "active",
         ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # Order the user dropdown by first+last name
-        self.fields["user"].queryset = User.objects.order_by("first_name", "last_name")
-        self.fields["user"].label_from_instance = (
-            lambda obj: obj.get_full_name() or obj.username
-        )
