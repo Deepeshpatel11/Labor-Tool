@@ -16,12 +16,21 @@ class EmployeeSkillAdmin(admin.ModelAdmin):
     list_display = (
         "employee",
         "primary_skill",
-        "show_additional_skills",
+        "secondary_skill",
+        "tertiary_skill",
     )
-    list_filter = ("primary_skill", "employee__shift")
-    search_fields = ("employee__full_name", "primary_skill__name")
-    raw_id_fields = ("employee", "primary_skill", "additional_skills")
-
-    def show_additional_skills(self, obj):
-        return ", ".join(sk.name for sk in obj.additional_skills.all())
-    show_additional_skills.short_description = "Additional Skills"
+    list_filter = (
+        "primary_skill",
+        "secondary_skill",
+        "tertiary_skill",
+        "employee__shift",
+        "employee__line",
+        "employee__area",
+    )
+    search_fields = (
+        "employee__full_name",
+        "primary_skill__name",
+        "secondary_skill__name",
+        "tertiary_skill__name",
+    )
+    raw_id_fields = ("employee", "primary_skill", "secondary_skill", "tertiary_skill")
