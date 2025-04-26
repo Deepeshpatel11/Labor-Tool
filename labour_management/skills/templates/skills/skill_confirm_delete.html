@@ -1,0 +1,12 @@
+{% extends "labour_management/base.html" %}
+{% block title %}Delete Skill{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h1>Confirm Delete</h1>
+  <p>Delete skill record for <strong>{{ object.employee.full_name }}</strong>?</p>
+  <form method="post">{% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'skills_index' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

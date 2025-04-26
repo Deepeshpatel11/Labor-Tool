@@ -1,88 +1,43 @@
-{% extends 'labour_management/base.html' %}
+{% extends "labour_management/base.html" %}
 {% block title %}Skills Matrix{% endblock %}
-
 {% block content %}
-<div class="container">
-  <h1 class="page-title">Skills Matrix</h1>
-  <div class="action-bar">
-    <button class="btn-add" onclick="openAddSkillModal()">Add Skill</button>
-  </div>
-
-  <table class="employee-table">
+<div class="container py-4">
+  <h1>Skills Matrix</h1>
+  <a href="{% url 'skills_create' %}" class="btn btn-primary mb-3">Add Skill</a>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>GPID</th>
-        <th>Employee Name</th>
+        <th>Employee</th>
         <th>Shift</th>
-        <th>Primary Skill</th>
-        <th>Additional Skills</th>
+        <th>Line</th>
+        <th>Area</th>
+        <th>Primary</th>
+        <th>Secondary</th>
+        <th>Tertiary</th>
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="skillsTableBody">
-      <!-- Placeholder row -->
+    <tbody>
+      {% for sk in skills %}
       <tr>
-        <td>1111111</td>
-        <td>Example Employee</td>
-        <td>Green</td>
-        <td>Slicing</td>
-        <td>Fryer, Packing, Seasoning</td>
+        <td>{{ sk.employee.gpid }}</td>
+        <td>{{ sk.employee.full_name }}</td>
+        <td>{{ sk.employee.shift }}</td>
+        <td>{{ sk.employee.line }}</td>
+        <td>{{ sk.employee.area }}</td>
+        <td>{{ sk.primary_skill.name }}</td>
+        <td>{{ sk.secondary_skill.name|default:"—" }}</td>
+        <td>{{ sk.tertiary_skill.name|default:"—" }}</td>
         <td>
-          <button class="btn-edit" onclick="openEditSkillModal()">Edit</button>
-          <button class="btn-delete" onclick="confirmDeleteSkill()">Delete</button>
+          <a href="{% url 'skills_update' sk.pk %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'skills_delete' sk.pk %}" class="btn btn-sm btn-danger">Delete</a>
         </td>
       </tr>
+      {% empty %}
+      <tr><td colspan="9">No skills recorded yet.</td></tr>
+      {% endfor %}
     </tbody>
   </table>
-</div>
-
-<!-- Add Skill Modal -->
-<div id="addSkillModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeAddSkillModal()">&times;</span>
-    <h3>Add Skill</h3>
-    <form>
-      <label>GPID:</label>
-      <input type="text" required><br><br>
-      <label>Employee Name:</label>
-      <input type="text" required><br><br>
-      <label>Shift:</label>
-      <select required>
-        <option value="">Select Shift</option>
-        <option value="Red">Red</option>
-        <option value="Green">Green</option>
-        <option value="Blue">Blue</option>
-        <option value="Yellow">Yellow</option>
-      </select><br><br>
-      <label>Primary Skill:</label>
-      <input type="text" required><br><br>
-      <label>Additional Skills (comma separated):</label>
-      <input type="text"><br><br>
-      <button type="submit" class="btn-add">Submit</button>
-    </form>
-  </div>
-</div>
-
-<!-- Edit Skill Modal -->
-<div id="editSkillModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeEditSkillModal()">&times;</span>
-    <h3>Edit Skill</h3>
-    <form>
-      <label>Shift:</label>
-      <select required>
-        <option value="">Select Shift</option>
-        <option value="Red">Red</option>
-        <option value="Green">Green</option>
-        <option value="Blue">Blue</option>
-        <option value="Yellow">Yellow</option>
-      </select><br><br>
-      <label>Primary Skill:</label>
-      <input type="text" required><br><br>
-      <label>Additional Skills (comma separated):</label>
-      <input type="text"><br><br>
-      <button type="submit" class="btn-add">Update</button>
-    </form>
-  </div>
 </div>
 {% endblock %}

@@ -1,11 +1,26 @@
-from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from .models import EmployeeSkill
+from .forms import EmployeeSkillForm
 
-# Sample placeholder data
-skills_data = [
-    {"name": "John Smith", "shift": "Red", "role": "Technician", "primary_skill": "Electrical", "secondary_skill": "Fryer Operator", "tertiary_skill": None},
-    {"name": "Alice Johnson", "shift": "Green", "role": "Manufacturing Technician", "primary_skill": "Packaging", "secondary_skill": "Primary Operator", "tertiary_skill": None},
-    {"name": "David Brown", "shift": "Blue", "role": "General Operator", "primary_skill": "Packing", "secondary_skill": None, "tertiary_skill": None},
-]
+class SkillListView(ListView):
+    model               = EmployeeSkill
+    template_name       = "skills/index.html"
+    context_object_name = "skills"
 
-def index(request):
-    return render(request, "skills/index.html", {"skills": skills_data})
+class SkillCreateView(CreateView):
+    model         = EmployeeSkill
+    form_class    = EmployeeSkillForm
+    template_name = "skills/skill_form.html"
+    success_url   = reverse_lazy("skills_index")
+
+class SkillUpdateView(UpdateView):
+    model         = EmployeeSkill
+    form_class    = EmployeeSkillForm
+    template_name = "skills/skill_form.html"
+    success_url   = reverse_lazy("skills_index")
+
+class SkillDeleteView(DeleteView):
+    model         = EmployeeSkill
+    template_name = "skills/skill_confirm_delete.html"
+    success_url   = reverse_lazy("skills_index")
