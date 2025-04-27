@@ -20,7 +20,7 @@ class HolidayRotaView(TemplateView):
         # --- DATES: from Jan 1st to Dec 31st of this year ---
         today = date.today()
         start = today.replace(month=1, day=1)
-        end   = today.replace(month=12, day=31)
+        end = today.replace(month=12, day=31)
         total_days = (end - start).days + 1
         dates = [start + timedelta(days=i) for i in range(total_days)]
         ctx["dates"] = dates
@@ -29,10 +29,10 @@ class HolidayRotaView(TemplateView):
         emps = Employee.objects.filter(active=True).select_related("area")
 
         # --- APPLY GET-PARAM FILTERS ---
-        q     = self.request.GET.get("q", "").strip()
+        q = self.request.GET.get("q", "").strip()
         shift = self.request.GET.get("shift", "")
-        area  = self.request.GET.get("area", "")
-        role  = self.request.GET.get("role", "")
+        area = self.request.GET.get("area", "")
+        role = self.request.GET.get("role", "")
 
         if q:
             emps = emps.filter(
@@ -52,14 +52,19 @@ class HolidayRotaView(TemplateView):
 
         # --- LISTS FOR DROPDOWNS ---
         base = Employee.objects.filter(active=True)
-        ctx["shifts"] = base.values_list("shift",    flat=True).distinct()
-        ctx["areas"]  = base.values_list("area__name", flat=True).distinct()
-        ctx["roles"]  = base.values_list("role",     flat=True).distinct()
+        ctx["shifts"] = base.values_list("shift", flat=True).distinct()
+        ctx["areas"] = base.values_list("area__name", flat=True).distinct()
+        ctx["roles"] = base.values_list("role", flat=True).distinct()
+
+        # --- ONLY VISIBLE EMPLOYEES ---
+        employee_ids = [e.pk for e in emps]
 
         # --- BUILD HOLIDAY STATUS MATRIX ---
-        matrix = {e.pk: {} for e in emps}
+        matrix = {pk: {} for pk in employee_ids}
         qs = HolidayRequest.objects.filter(
-            start_date__lte=end, end_date__gte=start
+            start_date__lte=end,
+            end_date__gte=start,
+            employee_id__in=employee_ids
         ).select_related("employee")
         for r in qs:
             for d in dates:
@@ -68,13 +73,12 @@ class HolidayRotaView(TemplateView):
         ctx["matrix"] = matrix
 
         # --- PRESERVE FILTER VALUES FOR “STICKY” FORM ---
-        ctx["filter_q"]     = q
+        ctx["filter_q"] = q
         ctx["filter_shift"] = shift
-        ctx["filter_area"]  = area
-        ctx["filter_role"]  = role
+        ctx["filter_area"] = area
+        ctx["filter_role"] = role
 
         # --- PASS DISPLAY-STRING STATUSES INTO TEMPLATE ---
-        # only approved requests show as "success"
         ctx["approved_statuses"] = (
             HolidayRequest.STATUS_APPROVED,
         )
@@ -83,17 +87,17 @@ class HolidayRotaView(TemplateView):
 
 
 class HolidayRequestListView(ListView):
-    model               = HolidayRequest
-    template_name       = "holidays/requests.html"
+    model = HolidayRequest
+    template_name = "holidays/requests.html"
     context_object_name = "requests"
-    paginate_by         = 20
+    paginate_by = 20
 
 
 class HolidayRequestCreateView(CreateView):
-    model         = HolidayRequest
-    form_class    = HolidayRequestForm
+    model = HolidayRequest
+    form_class = HolidayRequestForm
     template_name = "holidays/request_form.html"
-    success_url   = reverse_lazy("holidays_index")
+    success_url = reverse_lazy("holidays_index")
 
 
 def approve_holiday(request, pk):
