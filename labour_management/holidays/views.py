@@ -1,44 +1,67 @@
-from django.shortcuts import render, redirect
+# holidays/views.py
+from datetime import date, timedelta
+from django.views.generic import TemplateView, ListView, CreateView
+from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from django.utils import timezone
+from django.contrib import messages
 
-# Sample holiday request data (Replace this with actual database logic later)
-holiday_requests = [
-    {"id": 1, "employee": "John Smith", "start_date": "2025-04-01", "end_date": "2025-04-05", "status": "Pending"},
-    {"id": 2, "employee": "Alice Johnson", "start_date": "2025-04-10", "end_date": "2025-04-12", "status": "Pending"},
-]
+from employees.models import Employee
+from .models import HolidayRequest
+from .forms import HolidayRequestForm
 
-employees = [
-    {"id": 1, "name": "John Smith"},
-    {"id": 2, "name": "Alice Johnson"},
-]
+class HolidayRotaView(TemplateView):
+    template_name = "holidays/index.html"
 
-def index(request):
-    return render(request, "holidays/index.html")
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
 
-def holiday_request(request):
-    if request.method == "POST":
-        employee_id = request.POST.get("employee")
-        start_date = request.POST.get("start_date")
-        end_date = request.POST.get("end_date")
-        reason = request.POST.get("reason")
+        # 1st of this month → 31 days
+        start = date.today().replace(day=1)
+        dates = [start + timedelta(days=i) for i in range(31)]
+        ctx["dates"] = dates
 
-        # Simulate saving to the database
-        print(f"Holiday request: {employee_id}, {start_date} to {end_date}, Reason: {reason}")
+        # all active employees
+        emps = Employee.objects.filter(active=True).select_related("area")
+        ctx["employees"] = emps
 
-        return redirect("holidays_index")
+        # build a matrix: { emp.pk: { date: status_string } }
+        matrix = {e.pk: {} for e in emps}
+        qs = HolidayRequest.objects.filter(
+            start_date__lte=dates[-1], end_date__gte=dates[0]
+        ).select_related("employee")
+        for r in qs:
+            for d in dates:
+                if r.start_date <= d <= r.end_date:
+                    matrix[r.employee_id][d] = r.get_status_display()
+        ctx["matrix"] = matrix
 
-    return render(request, "holidays/request.html", {"employees": employees})
+        return ctx
 
-def holiday_approvals(request):
-    return render(request, "holidays/approvals.html", {"holiday_requests": holiday_requests})
+class HolidayRequestListView(ListView):
+    model               = HolidayRequest
+    template_name       = "holidays/requests.html"
+    context_object_name = "requests"
+    paginate_by         = 20
 
-def approve_holiday(request, request_id):
-    for req in holiday_requests:
-        if req["id"] == request_id:
-            req["status"] = "Approved"
-    return redirect("holiday_approvals")
+class HolidayRequestCreateView(CreateView):
+    model         = HolidayRequest
+    form_class    = HolidayRequestForm
+    template_name = "holidays/request_form.html"
+    success_url   = reverse_lazy("holidays_index")
 
-def reject_holiday(request, request_id):
-    for req in holiday_requests:
-        if req["id"] == request_id:
-            req["status"] = "Rejected"
-    return redirect("holiday_approvals")
+def approve_holiday(request, pk):
+    hr = get_object_or_404(HolidayRequest, pk=pk)
+    hr.status = HolidayRequest.STATUS_APPROVED
+    hr.reviewed_at = timezone.now()
+    hr.save()
+    messages.success(request, f"Holiday for {hr.employee.full_name} approved.")
+    return redirect("holidays_index")
+
+def reject_holiday(request, pk):
+    hr = get_object_or_404(HolidayRequest, pk=pk)
+    hr.status = HolidayRequest.STATUS_REJECTED
+    hr.reviewed_at = timezone.now()
+    hr.save()
+    messages.success(request, f"Holiday for {hr.employee.full_name} rejected.")
+    return redirect("holidays_index")

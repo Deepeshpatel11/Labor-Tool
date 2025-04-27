@@ -1,109 +1,60 @@
 {% extends "labour_management/base.html" %}
-
+{% load dict_extras %}
 {% block title %}Holiday Rota{% endblock %}
 
 {% block content %}
-<h1 class="page-title">Holiday Rota</h1>
-<div class="action-bar">
-    <button id="btnAdd" class="btn-add">Request Leave</button>
-    <button class="btn-approve" id="approveLeaveBtn">Approve Leave</button>
+<div class="container py-4">
+  <h1>Holiday Rota (next {{ dates|length }} days)</h1>
+  <a href="{% url 'holidays_index' %}" class="btn btn-secondary btn-sm">Refresh</a>
+  <a href="{% url 'holidays_requests' %}" class="btn btn-primary btn-sm">Requests</a>
+  <div style="overflow:auto;">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="sticky-col" style="left:0; z-index:3;">GPID</th>
+          <th class="sticky-col" style="left:80px; z-index:3;">Name</th>
+          <th class="sticky-col" style="left:240px; z-index:3;">Shift</th>
+          <th class="sticky-col" style="left:320px; z-index:3;">Area</th>
+          <th class="sticky-col" style="left:400px; z-index:3;">Role</th>
+          {% for d in dates %}
+            <th>{{ d|date:"j/M" }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in employees %}
+          <tr>
+            <td class="sticky-col" style="left:0;">{{ e.gpid }}</td>
+            <td class="sticky-col" style="left:80px;">{{ e.full_name }}</td>
+            <td class="sticky-col" style="left:240px;">{{ e.shift }}</td>
+            <td class="sticky-col" style="left:320px;">{{ e.area }}</td>
+            <td class="sticky-col" style="left:400px;">{{ e.role }}</td>
 
-</div>
-
-<div class="holiday-filters">
-    <input type="text" id="filterName" placeholder="Search by name..." />
-    <select id="filterShift">
-        <option value="">All Shifts</option>
-        <option value="Red">Red</option>
-        <option value="Green">Green</option>
-        <option value="Blue">Blue</option>
-        <option value="Yellow">Yellow</option>
-    </select>
-    <select id="filterRole">
-        <option value="">All Roles</option>
-        <option value="General Support Operator">General Support Operator</option>
-        <option value="General Operator">General Operator</option>
-        <option value="Manufacturing Technician">Manufacturing Technician</option>
-        <option value="Shift Technician">Shift Technician</option>
-    </select>
-    <select id="filterArea">
-        <option value="">All Areas</option>
-        <option value="Process">Process</option>
-        <option value="Primary Packaging">Primary Packaging</option>
-        <option value="Multipack Packaging">Multipack Packaging</option>
-        <option value="Palletising">Palletising</option>
-        <option value="Despatch">Despatch</option>
-        <option value="Other">Other</option>
-    </select>
-    <select id="filterStatus">
-        <option value="">All Statuses</option>
-        <option value="Approved">Approved</option>
-        <option value="Pending">Pending</option>
-    </select>
-</div>
-  
-<div class="holiday-scroll-container">
-    <table class="holiday-table">
-        <thead>
-            <tr>
-                <th class="sticky-col">GPID</th>
-                <th class="sticky-col">Full Name</th>
-                <th class="sticky-col">Shift</th>
-                <th class="sticky-col">Role</th>
-                <th class="sticky-col">Area</th>
-                <!-- Dynamically inserted dates -->
-            </tr>
-        </thead>
-        <tbody id="holidayTableBody">
-            <!-- Example row -->
-            <tr>
-                <td class="sticky-col">11111111</td>
-                <td class="sticky-col">Example Employee</td>
-                <td class="sticky-col">Red</td>
-                <td class="sticky-col">General Operator</td>
-                <td class="sticky-col">Process</td>
-                <!-- Dates will be filled dynamically -->
-            </tr>
-        </tbody>
+            {# first grab the row for this employee #}
+            {% with matrix|get_item:e.id as row %}
+              {% for d in dates %}
+                {# then grab the status for this date #}
+                {% with row|get_item:d as stat %}
+                  <td>
+                    {% if stat %}
+                      <span class="badge badge-pill
+                        {% if stat == 'Approved' or stat == 'Holiday' %}
+                          badge-success
+                        {% else %}
+                          badge-warning
+                        {% endif %}
+                      ">
+                        {{ stat }}
+                      </span>
+                    {% endif %}
+                  </td>
+                {% endwith %}
+              {% endfor %}
+            {% endwith %}
+          </tr>
+        {% endfor %}
+      </tbody>
     </table>
-</div>
-
-<!-- Request Leave Modal -->
-<div id="leaveModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h3>Request Leave</h3>
-        <form id="leaveForm">
-            <label for="leaveType">Leave Type:</label>
-            <select id="leaveType" name="leaveType">
-                <option value="holiday">Holiday</option>
-                <option value="sick">Sick</option>
-                <option value="carers">Carers Leave</option>
-            </select>
-            <label for="leaveDate">Select Date:</label>
-            <input type="date" id="leaveDate" name="leaveDate" required />
-            <button type="submit" class="btn-add">Submit</button>
-        </form>
-    </div>
-</div>
-
-<!-- Approve Leave Modal -->
-<div id="approveModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeApproveModal">&times;</span>
-      <h3>Pending Leave Requests</h3>
-      <div id="pendingRequestsList">
-        <!-- Example placeholder data -->
-        <div class="pending-request">
-          <p><strong>Example Emp:</strong> John Doe</p>
-          <p><strong>Date:</strong> 2025-06-10</p>
-          <p><strong>Type:</strong> Annual Leave</p>
-          <p><strong>Submitted:</strong> 2025-03-25 09:21 AM</p>
-          <button class="btn-approve-small">Approve</button>
-          <button class="btn-reject-small">Reject</button>
-        </div>
-      </div>
-    </div>
   </div>
-  
+</div>
 {% endblock %}

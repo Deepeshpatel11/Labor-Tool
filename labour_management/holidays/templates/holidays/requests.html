@@ -1,0 +1,71 @@
+{% extends "labour_management/base.html" %}
+{% block title %}Holiday Requests{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1>Holiday Requests</h1>
+  <p>
+    <a href="{% url 'holiday_request' %}" class="btn btn-primary">Request Leave</a>
+  </p>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>GPID</th>
+        <th>Employee</th>
+        <th>Shift</th>
+        <th>Area</th>
+        <th>Role</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+        <th>Actions</th>          {# new header #}
+      </tr>
+    </thead>
+    <tbody>
+      {% for req in requests %}
+        <tr>
+          <td>{{ req.employee.gpid }}</td>
+          <td>{{ req.employee.full_name }}</td>
+          <td>{{ req.employee.shift }}</td>
+          <td>{{ req.employee.area }}</td>
+          <td>{{ req.employee.role }}</td>
+          <td>{{ req.start_date }}</td>
+          <td>{{ req.end_date }}</td>
+          <td>{{ req.get_status_display }}</td>
+          <td>
+            {% if req.status == req.STATUS_PENDING %}
+              <a href="{% url 'holiday_approve' req.pk %}" class="btn btn-sm btn-success">Approve</a>
+              <a href="{% url 'holiday_reject'  req.pk %}" class="btn btn-sm btn-danger">Reject</a>
+            {% else %}
+              &mdash;
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="9">No holiday requests.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {# pagination, if you enabled it #}
+  {% if is_paginated %}
+    <nav>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">‹ Prev</a>
+          </li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next ›</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+
+</div>
+{% endblock %}

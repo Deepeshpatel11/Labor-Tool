@@ -31,15 +31,14 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    # if you’re using GitHub Codespaces or similar the hostname will be
-    # something like ominous-space-winner-jjg79pj9grgc945-8000.app.github.dev
+    # for GitHub Codespaces dev URL:
     ".app.github.dev",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "https://localhost:8000",
-    "https://*.app.github.dev",
+    "https://friendly-cod-pj75g7r6px37x9p-8000.app.github.dev",
 ]
 
 
