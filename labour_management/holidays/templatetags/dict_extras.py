@@ -6,7 +6,7 @@ register = template.Library()
 def get_item(dictionary, key):
     """
     Given a dict and a key, return dictionary[key] or None.
-    Usage in template: {{ mydict|get_item:mykey }}
+    Usage in template: {{ matrix|get_item:employee.id|get_item:date }}
     """
     if dictionary is None:
         return None

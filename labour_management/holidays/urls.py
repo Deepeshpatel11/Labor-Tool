@@ -1,4 +1,3 @@
-# holidays/urls.py
 from django.urls import path
 from .views import (
     HolidayRotaView,
@@ -9,8 +8,8 @@ from .views import (
 )
 
 urlpatterns = [
-    path("", HolidayRotaView.as_view(), name="holidays_index"),
-    path("requests/", HolidayRequestListView.as_view(), name="holiday_requests"),
+    path("",            HolidayRotaView.as_view(),       name="holidays_index"),
+    path("requests/",   HolidayRequestListView.as_view(), name="holidays_requests"),
     path("requests/add/", HolidayRequestCreateView.as_view(), name="holiday_request"),
     path("<int:pk>/approve/", approve_holiday, name="holiday_approve"),
     path("<int:pk>/reject/",  reject_holiday,  name="holiday_reject"),

@@ -1,12 +1,48 @@
+{# templates/holidays/index.html #}
 {% extends "labour_management/base.html" %}
 {% load dict_extras %}
+
 {% block title %}Holiday Rota{% endblock %}
 
 {% block content %}
 <div class="container py-4">
-  <h1>Holiday Rota (next {{ dates|length }} days)</h1>
-  <a href="{% url 'holidays_index' %}" class="btn btn-secondary btn-sm">Refresh</a>
-  <a href="{% url 'holidays_requests' %}" class="btn btn-primary btn-sm">Requests</a>
+
+  <h1>Holiday Rota ({{ dates|length }} days)</h1>
+
+  <p>
+    <a href="{% url 'holidays_index' %}" class="btn btn-secondary btn-sm">Refresh</a>
+    <a href="{% url 'holidays_requests' %}" class="btn btn-primary btn-sm">Requests</a>
+  </p>
+
+  <form method="get" class="form-inline mb-3">
+    <input type="text" name="q"
+           value="{{ filter_q }}" placeholder="Search name or GPID"
+           class="form-control form-control-sm mr-2">
+
+    <select name="shift" class="form-control form-control-sm mr-2">
+      <option value="">All Shifts</option>
+      {% for s in shifts %}
+        <option value="{{ s }}" {% if filter_shift == s %} selected {% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="area" class="form-control form-control-sm mr-2">
+      <option value="">All Areas</option>
+      {% for a in areas %}
+        <option value="{{ a }}" {% if filter_area == a %} selected {% endif %}>{{ a }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="role" class="form-control form-control-sm mr-2">
+      <option value="">All Roles</option>
+      {% for r in roles %}
+        <option value="{{ r }}" {% if filter_role == r %} selected {% endif %}>{{ r }}</option>
+      {% endfor %}
+    </select>
+
+    <button class="btn btn-sm btn-primary">Filter</button>
+  </form>
+
   <div style="overflow:auto;">
     <table class="table table-bordered">
       <thead>
@@ -23,38 +59,31 @@
       </thead>
       <tbody>
         {% for e in employees %}
-          <tr>
-            <td class="sticky-col" style="left:0;">{{ e.gpid }}</td>
-            <td class="sticky-col" style="left:80px;">{{ e.full_name }}</td>
-            <td class="sticky-col" style="left:240px;">{{ e.shift }}</td>
-            <td class="sticky-col" style="left:320px;">{{ e.area }}</td>
-            <td class="sticky-col" style="left:400px;">{{ e.role }}</td>
+        <tr>
+          <td class="sticky-col" style="left:0;">{{ e.gpid }}</td>
+          <td class="sticky-col" style="left:80px;">{{ e.full_name }}</td>
+          <td class="sticky-col" style="left:240px;">{{ e.shift }}</td>
+          <td class="sticky-col" style="left:320px;">{{ e.area.name }}</td>
+          <td class="sticky-col" style="left:400px;">{{ e.role }}</td>
 
-            {# first grab the row for this employee #}
-            {% with matrix|get_item:e.id as row %}
-              {% for d in dates %}
-                {# then grab the status for this date #}
-                {% with row|get_item:d as stat %}
-                  <td>
-                    {% if stat %}
-                      <span class="badge badge-pill
-                        {% if stat == 'Approved' or stat == 'Holiday' %}
-                          badge-success
-                        {% else %}
-                          badge-warning
-                        {% endif %}
-                      ">
-                        {{ stat }}
-                      </span>
-                    {% endif %}
-                  </td>
-                {% endwith %}
-              {% endfor %}
+          {% for d in dates %}
+            {% with matrix|get_item:e.pk|get_item:d as stat %}
+            <td>
+              {% if stat %}
+                {% if stat in approved_statuses %}
+                  <span class="badge badge-pill badge-success">{{ stat }}</span>
+                {% else %}
+                  <span class="badge badge-pill badge-warning">{{ stat }}</span>
+                {% endif %}
+              {% endif %}
+            </td>
             {% endwith %}
-          </tr>
+          {% endfor %}
+        </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+
 </div>
 {% endblock %}
