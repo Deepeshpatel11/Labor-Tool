@@ -1,89 +1,101 @@
+{# labour_management/shifts/templates/shifts/index.html #}
 {% extends "labour_management/base.html" %}
 
 {% block title %}Shift Schedule{% endblock %}
 
 {% block content %}
-<h1>Shift Schedule</h1>
+<div class="container py-4">
+  <h1>Shift Schedule</h1>
 
-<div class="action-bar">
-    <button id="openCreateShiftModal" class="btn-add">Create New Shift</button>
-</div>
-  
+  <!-- Button to open modal for creating a new shift -->
+  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#createShiftModal">
+    Create New Shift
+  </button>
 
-<table class="employee-table">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Shift Type</th>
-            <th>Shift</th>
-            <th>Staffing Level</th>
-            <th>View Manning Rota</th>
-        </tr>
+  <!-- Shifts table -->
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>Date</th>
+        <th>Team</th>
+        <th>Time</th>
+        <th>Assigned</th>
+        <th>View Rota</th>
+      </tr>
     </thead>
     <tbody>
-        {% for shift in shifts %}
-        <tr>
-            <td>{{ shift.date }}</td>
-            <td>{{ shift.shift_type }}</td>
-            <td class="shift-name" data-date="{{ shift.date }}" data-type="{{ shift.shift_type }}">Loading...</td>
-            <td>{{ shift.staffing }}</td>
-            <td><a href="{% url 'manning_rota' shift.date shift.shift_type %}">View Rota</a></td>
-        </tr>
-        {% endfor %}
+      {% for shift in shifts %}
+      <tr>
+        <td>{{ shift.date }}</td>
+        <td>{{ shift.team }}</td>
+        <td>{{ shift.shift_time }}</td>
+        <td>{{ shift.assignments.count }} assigned</td>
+        <td>
+          <a href="{% url 'manning_rota' shift.date %}" class="btn btn-link btn-sm">
+            View Rota
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="text-center">No shifts scheduled yet.</td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
+  </table>
 
-<!-- Modal for Creating Shift -->
-<div id="createShiftModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeModalBtn">&times;</span>
-    <h3>Create New Shift</h3>
-    <form id="createShiftForm">
-      <label for="shiftDate">Date:</label>
-      <input type="date" id="shiftDate" name="shiftDate" required>
+  <!-- Create Shift Modal -->
+  <div class="modal fade" id="createShiftModal" tabindex="-1" role="dialog"
+       aria-labelledby="createShiftModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        {# Point the form at your index() POST handler #}
+        <form method="post" action="{% url 'shifts_index' %}">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h5 class="modal-title" id="createShiftModalLabel">Create New Shift</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
 
-      <label for="shiftType">Shift Type:</label>
-      <select id="shiftType" name="shiftType" required>
-        <option value="Day">Day</option>
-        <option value="Night">Night</option>
-      </select>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="id_date">Date</label>
+              <input type="date" name="date" id="id_date"
+                     class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="id_team">Team</label>
+              <select name="team" id="id_team" class="form-control" required>
+                <option value="">Select Team</option>
+                {% for key,label in team_choices %}
+                  <option value="{{ key }}">{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="id_shift_time">Time</label>
+              <select name="shift_time" id="id_shift_time"
+                      class="form-control" required>
+                <option value="">Select Shift Time</option>
+                {% for key,label in shift_time_choices %}
+                  <option value="{{ key }}">{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
 
-      <!-- ▶ Scenario selectors ▶ -->
-      <label for="scenario1">Line 1 Scenario:</label>
-      <select id="scenario1" name="scenario1" required>
-        <option value="pc">PC Production</option>
-        <option value="engineering">Engineering &amp; Debris Removal</option>
-        <option value="boilout">Boil‑Out</option>
-
-      </select>
-
-      <label for="scenario2">Line 2 Scenario:</label>
-      <select id="scenario2" name="scenario2" required>
-        <option value="pc">PC Production</option>
-        <option value="engineering">Engineering &amp; Debris Removal</option>
-        <option value="boilout">Boil‑Out</option>
-      </select>
-
-      <label for="scenario3">Line 3 Scenario:</label>
-      <select id="scenario3" name="scenario3" required>
-        <option value="pc">PC Production</option>
-        <option value="sensations">Sensations Production</option>
-        <option value="engineering">Engineering &amp; Debris Removal</option>
-        <option value="boilout">Boil‑Out</option>
-      </select>
-
-      <label for="scenario4">Line 4 Scenario:</label>
-      <select id="scenario4" name="scenario4" required>
-        <option value="snack">Snack Production</option>
-        <option value="engineering">Engineering &amp; Debris Removal</option>
-        <option value="boilout">Boil‑Out</option>
-      </select>
-      <!-- ◀ end scenario selectors ◀ -->
-
-      <button type="submit">Create Shift</button>
-    </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">
+              Create Shift
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
-
-
 {% endblock %}

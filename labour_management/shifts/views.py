@@ -1,33 +1,80 @@
-from django.shortcuts import render
+import datetime
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Shift, ShiftHistory
+from employees.models import Employee
+from holidays.models import HolidayRequest
 
-# Sample shift data
-shifts_data = [
-    {"date": "2025-03-20", "shift_type": "Day", "staffing": "Normal"},
-    {"date": "2025-03-20", "shift_type": "Night", "staffing": "Understaffed"},
-    {"date": "2025-03-21", "shift_type": "Day", "staffing": "Normal"},
-    {"date": "2025-03-24", "shift_type": "Night", "staffing": "Full"},
-]
-
-# Sample manning rota data
-rota_data = {
-    "2025-03-20_Day": [
-        {"name": "John Smith", "role": "Supervisor", "area": "Process"},
-        {"name": "Alice Johnson", "role": "Technician", "area": "Packaging"},
-    ],
-    "2025-03-20_Night": [
-        {"name": "David Brown", "role": "Operator", "area": "Multipack"},
-        {"name": "Sarah Lee", "role": "Technician", "area": "Palletising"},
-    ],
-}
 
 def index(request):
-    return render(request, "shifts/index.html", {"shifts": shifts_data})
+    # Handle new Shift creation via modal POST
+    if request.method == 'POST':
+        date_str = request.POST.get('date')
+        team = request.POST.get('team')
+        shift_time = request.POST.get('shift_time')
+        if date_str and team and shift_time:
+            date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+            Shift.objects.get_or_create(
+                date=date,
+                team=team,
+                shift_time=shift_time
+            )
+        return redirect('shifts_index')
 
-def manning_rota(request, date, shift_type):
-    rota_key = f"{date}_{shift_type}"
-    rota = rota_data.get(rota_key, [])  # Get rota for the specific date/shift, or empty list if not found
-    return render(request, "shifts/manning_rota.html", {"date": date, "shift_type": shift_type, "rota": rota})
+    # GET: list upcoming shifts
+    today = datetime.date.today()
+    shifts = (
+        Shift.objects
+        .filter(date__gte=today)
+        .order_by('date', 'team', 'shift_time')
+    )
+
+    # pass dropdown choices into template for modal
+    context = {
+        'shifts': shifts,
+        'team_choices': Shift.TEAM_CHOICES,
+        'shift_time_choices': Shift.TIME_CHOICES,
+    }
+    return render(request, 'shifts/index.html', context)
 
 
-def shift_detail(request):
-    return render(request, "shifts/shift_detail.html")
+def manning_rota(request, date):
+    # Parse date from URL and fetch the Shift
+    shift_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+    shift = get_object_or_404(Shift, date=shift_date)
+
+    # Build employee pool: home team members not on holiday
+    absent_ids = (
+        HolidayRequest.objects
+        .filter(start_date__lte=shift_date, end_date__gte=shift_date)
+        .values_list('employee_id', flat=True)
+    )
+    pool = (
+        Employee.objects
+        .filter(active=True, shift=shift.team)
+        .exclude(pk__in=absent_ids)
+    )
+
+    if request.method == 'POST':
+        # Clear old assignments then save new ones
+        ShiftHistory.objects.filter(shift=shift).delete()
+        for key, value in request.POST.items():
+            if key.startswith('assign_') and value:
+                emp_pk = key.split('_', 1)[1]
+                ShiftHistory.objects.create(
+                    shift=shift,
+                    employee_id=emp_pk
+                )
+        return redirect('shifts_index')
+
+    # GET: show existing assignments
+    assignments = (
+        ShiftHistory.objects
+        .filter(shift=shift)
+        .select_related('employee')
+    )
+
+    return render(request, 'shifts/manning_rota.html', {
+        'shift': shift,
+        'pool': pool,
+        'assignments': assignments,
+    })
