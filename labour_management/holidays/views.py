@@ -6,12 +6,17 @@ from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Q
 
+# new imports for auth
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 from employees.models import Employee
 from .models import HolidayRequest
 from .forms import HolidayRequestForm
 
 
-class HolidayRotaView(TemplateView):
+class HolidayRotaView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy("login")
     template_name = "holidays/index.html"
 
     def get_context_data(self, **kwargs):
@@ -86,20 +91,23 @@ class HolidayRotaView(TemplateView):
         return ctx
 
 
-class HolidayRequestListView(ListView):
+class HolidayRequestListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("login")
     model = HolidayRequest
     template_name = "holidays/requests.html"
     context_object_name = "requests"
     paginate_by = 20
 
 
-class HolidayRequestCreateView(CreateView):
+class HolidayRequestCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("login")
     model = HolidayRequest
     form_class = HolidayRequestForm
     template_name = "holidays/request_form.html"
     success_url = reverse_lazy("holidays_index")
 
 
+@login_required(login_url=reverse_lazy("login"))
 def approve_holiday(request, pk):
     hr = get_object_or_404(HolidayRequest, pk=pk)
     hr.status = HolidayRequest.STATUS_APPROVED
@@ -109,6 +117,7 @@ def approve_holiday(request, pk):
     return redirect("holidays_index")
 
 
+@login_required(login_url=reverse_lazy("login"))
 def reject_holiday(request, pk):
     hr = get_object_or_404(HolidayRequest, pk=pk)
     hr.status = HolidayRequest.STATUS_REJECTED

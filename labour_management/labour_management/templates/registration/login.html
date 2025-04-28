@@ -1,0 +1,27 @@
+{% extends "labour_management/base.html" %}
+{% load widget_tweaks %}                 {# ← load the library #}
+
+{% block title %}Please Sign In{% endblock %}
+{% block content %}
+<div class="container py-4" style="max-width:360px; margin:auto;">
+  <h2 class="mb-3">Please Sign In</h2>
+  {% if form.errors %}
+    <div class="alert alert-danger">Invalid username or password</div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_username">Username</label>
+      {{ form.username|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+      <label for="id_password">Password</label>
+      {{ form.password|add_class:"form-control" }}
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
+    {% if request.GET.logged_out %}
+      <small class="text-success">You have been logged out.</small>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

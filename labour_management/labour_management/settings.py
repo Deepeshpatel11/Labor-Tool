@@ -45,6 +45,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "widget_tweaks",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -151,3 +152,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Redirect here after successful login
+LOGIN_REDIRECT_URL = "/"
+# If a view is protected by @login_required, unauthenticated users go here:
+LOGIN_URL = "/accounts/login/"
+# After logout, send users here
+LOGOUT_REDIRECT_URL = "/accounts/login/?logged_out=1"
+
