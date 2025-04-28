@@ -1,62 +1,10 @@
 {% extends "labour_management/base.html" %}
-{% block title %}Shift Schedule{% endblock %}
+
+{% block title %}Shift Schedule (Coming Soon){% endblock %}
 
 {% block content %}
-<div class="container py-4">
-  <h1>Shift Schedule</h1>
-
-  <details class="mb-3">
-    <summary class="btn btn-primary">Create New Shift</summary>
-    <div class="p-3 border">
-      <form method="post" action="{% url 'shifts_index' %}">
-        {% csrf_token %}
-        <div class="form-group mb-2">
-          <label>Date</label>
-          <input type="date" name="date" class="form-control" required>
-        </div>
-        <div class="form-group mb-2">
-          <label>Team</label>
-          <select name="team" class="form-control" required>
-            <option value="">– select –</option>
-            {% for k,l in team_choices %}
-              <option value="{{ k }}">{{ l }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group mb-2">
-          <label>Time</label>
-          <select name="shift_time" class="form-control" required>
-            <option value="">– select –</option>
-            {% for k,l in shift_time_choices %}
-              <option value="{{ k }}">{{ l }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <button type="submit" class="btn btn-success">Create Shift</button>
-      </form>
-    </div>
-  </details>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr><th>Date</th><th>Team</th><th>Time</th><th>Assigned</th><th>View Rota</th></tr>
-    </thead>
-    <tbody>
-      {% for shift in shifts %}
-      <tr>
-        <td>{{ shift.date }}</td>
-        <td>{{ shift.team }}</td>
-        <td>{{ shift.shift_time }}</td>
-        <td>{{ shift.assignments.count }} assigned</td>
-        <td>
-          <a href="{% url 'manning_rota' shift.date %}?line=line1&scenario=pc_production"
-             class="btn btn-link btn-sm">View Rota</a>
-        </td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="5" class="text-center">No shifts scheduled.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+  <div class="container py-4 text-center">
+    <h1>🚧 Shift Schedule Under Construction 🚧</h1>
+    <p>We’re busy rebuilding this section. Please check back later!</p>
+  </div>
 {% endblock %}
