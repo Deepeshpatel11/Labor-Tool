@@ -1,6 +1,0 @@
-Django>=4.x
-gunicorn
-dj-database-url
-whitenoise
-psycopg2-binary
-django-widget-tweaks
