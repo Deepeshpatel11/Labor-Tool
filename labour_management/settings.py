@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 2) read SECRET_KEY and DEBUG from environment
 SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG      = False
+DEBUG      = True
 
 ALLOWED_HOSTS = [
     "localhost",
