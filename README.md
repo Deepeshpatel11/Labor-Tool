@@ -1,131 +1,356 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Labour Management Tool
 
-Welcome USER_NAME,
+Portfolio project for managing employees, shifts, holidays, skills and reporting, built as part of a Full Stack Software Development Diploma.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
-
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
-
-## Gitpod Reminders
-
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
-
-`python3 -m http.server`
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
-
-### Connecting your Mongo database
-
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
-
-------
-
-## Release History
-
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
-
-**June 18, 2024,** Add Mongo back into template
-
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
-
-**May 28 2024:** Fix Mongo and Links installs
-
-**April 26 2024:** Update node version to 16
-
-**September 20 2023:** Update Python version to 3.9.17.
-
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
-
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
-
-**July 2 2021:** Remove extensions that are not available in Open VSX.
-
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+![My Labour Management Tool](documentations/images/desktop-view.png)
+![My Labour Management Tool](documentations/images/tablet-view.png)
+![My Labour Management Tool](documentations/images/mobile-view.png)
 
 ---
 
-Happy coding!
+## Live Demo
+
+🔗 https://labour-tool-45111572f062.herokuapp.com
+
+---
+
+## Site Objectives
+Design and create a labour management tool to demonstrate an increasing understanding of the libraries, frameworks, and deployment solutions available to developers.
+
+My three main objectives were:
+
+### Build a clean and responsive user interface
+I wanted managers to navigate easily between employees, shifts, skills, and holidays. Django templates and Bootstrap 5 were used for styling and layout.
+
+### Leverage available backend functionality
+The backend framework enables secure authentication, full CRUD operations for employees, skills, and holiday requests, and lays the groundwork for future shift scheduling and reporting features. Django’s ORM, django-allauth, and django-crispy-forms power these workflows.
+
+### Store data on external cloud services
+I integrated PostgreSQL from Code Institute database to manage employee data, skillsets and store Holiday data.
+
+## User Experience / UX
+
+**Target Audience**  
+- Managers and team leads responsible for staff oversight.
+- HR administrators tracking skills, holidays, and resource available.  
+- Small business owners seeking a simple way to view and manage employee data.
+
+**User Stories**
+
+### New Visitor Goals
+- **Understand core functionality**  
+  Quickly see that the tool lets them view employees, their roles, skills and holiday status.  
+- **Learn how to get started**  
+  Find the login process, as this contains sensitive data, this would be tailor made for each business.
+- **Explore navigation**  
+  Discover where to click to view Employees, Skills, Holidays and (future) Shift Scheduling & Reports.
+
+### Existing Visitor Goals
+- **Log in and out securely**  
+  Enter their credentials and access the firms dashboard.  
+- **View employee directory**  
+  Browse all staff members, see their roles, assigned shifts and areas of work.  
+- **Check skills inventory**  
+  Search or filter employees by skill to find the right person for the job.  
+- **Monitor holiday requests**  
+  See pending, approved and upcoming time-off grouped by area of work.  
+- **(Future) Manage shifts & generate reports**  
+  Assign or adjust shifts and pull utilization reports once those features are released.
+
+## Design Choices
+
+### Colour Scheme
+- **Backgrounds**: Light gray (#f8f9fa) for a neutral, low-fatigue backdrop  
+- **Text**: Dark gray (#212529) for high readability  
+- **Primary Accent**: Bright blue (#0d6efd) on buttons and links to draw attention  
+- **Status Indicators**:  
+  - Success – green (#198754)  
+  - Warning – orange (#fd7e14)  
+  - Error – red (#dc3545)  
+
+This neutral palette keeps the interface clean and consistent, with accents guiding the user toward interactive elements.
+
+### Typography
+- **Base font**: `font-family: Arial, sans-serif;`  
+  A widely supported, easy-to-read system font that ensures consistency across devices.  
+- **Hierarchy**:  
+  - Headings use larger weights of Arial for clear section separation  
+  - Body text remains standard weight for optimal legibility  
+
+### Logo
+- **Favicon**: 🧑‍💼 (Office worker emoji)  
+  Chosen as a simple, universally recognizable icon to represent staff management and the core purpose of the tool.
+
+## Wireframes
+
+### Mobile Employee App Homepage wireframe
+### Mobile Skills App Homepage wireframe
+### Mobile Holiday App Homepage wireframe
+
+### Tablet Employee App Homepage wireframe
+### Tablet Skills App Homepage wireframe
+### Tablet Holiday App Homepage wireframe
+
+### Desktop Employee App Homepage wireframe
+### Desktop Skills App Homepage wireframe
+### Desktop Holiday App Homepage wireframe
+
+## Flow Diagram
+
+
+## Database Plan
+
+Below is an outline of the main tables, their columns, data types, constraints, and relationships based on your `models.py` definitions.
+
+### `employees_employee`
+| Column      | Type                | Constraints                                                      |
+|-------------|---------------------|------------------------------------------------------------------|
+| `id`        | `AutoField`         | Primary key                                                     |
+| `full_name` | `VARCHAR(100)`      | Unique, NOT NULL                                                |
+| `gpid`      | `VARCHAR(20)`       | Unique, NOT NULL                                                |
+| `shift`     | `VARCHAR(10)`       | Choices: Green, Blue, Red, Yellow; Default: Green               |
+| `role`      | `VARCHAR(3)`        | Choices: GSO, GO, MT, ST; Default: GSO; NOT NULL                |
+| `line`      | `VARCHAR(10)`       | Choices: 1, 2, 3, 4, MOH, ALL; Default: 1; NOT NULL            |
+| `area_id`   | `INTEGER`           | FK → `skills_area(id)`, on_delete=PROTECT; NOT NULL             |
+| `active`    | `BOOLEAN`           | Default: True                                                   |
+
+> **Relationships:**  
+> - Many **Employee** rows relate to one **Area** row (`area_id` FK).
+
+---
+
+### `skills_area`
+| Column | Type           | Constraints           |
+|--------|----------------|-----------------------|
+| `id`   | `AutoField`    | Primary key           |
+| `name` | `VARCHAR(100)` | Unique, NOT NULL      |
+
+---
+
+### `skills_skillmaster`
+| Column | Type           | Constraints           |
+|--------|----------------|-----------------------|
+| `id`   | `AutoField`    | Primary key           |
+| `name` | `VARCHAR(100)` | Unique, NOT NULL      |
+
+---
+
+### `skills_employeeskill`
+| Column             | Type       | Constraints                                                                    |
+|--------------------|------------|--------------------------------------------------------------------------------|
+| `id`               | `AutoField`| Primary key                                                                    |
+| `employee_id`      | `INTEGER`  | OneToOne FK → `employees_employee(id)`, on_delete=CASCADE; NOT NULL            |
+| `primary_skill_id` | `INTEGER`  | FK → `skills_skillmaster(id)`, on_delete=PROTECT; NOT NULL                    |
+| `secondary_skill_id` | `INTEGER`| FK → `skills_skillmaster(id)`, on_delete=PROTECT; NULLABLE                    |
+| `tertiary_skill_id`  | `INTEGER`| FK → `skills_skillmaster(id)`, on_delete=PROTECT; NULLABLE                    |
+
+> **Relationships:**  
+> - Each **EmployeeSkill** row is a 1–1 profile for an **Employee**.  
+> - Skills in **SkillMaster** can appear as primary, secondary, or tertiary in many profiles.
+
+---
+
+### `holidays_holidayrequest`
+| Column        | Type              | Constraints                                                           |
+|---------------|-------------------|-----------------------------------------------------------------------|
+| `id`          | `AutoField`       | Primary key                                                          |
+| `employee_id` | `INTEGER`         | FK → `employees_employee(id)`, on_delete=CASCADE; NOT NULL          |
+| `start_date`  | `DATE`            | NOT NULL                                                             |
+| `end_date`    | `DATE`            | NOT NULL                                                             |
+| `status`      | `VARCHAR(10)`     | Choices: Pending, Approved, Rejected; Default: Pending; NOT NULL     |
+| `requested_at`| `DATETIME`        | auto_now_add=True                                                    |
+| `reviewed_at` | `DATETIME`        | NULLABLE                                                             |
+
+> **Relationships:**  
+> - Each **HolidayRequest** belongs to one **Employee**.
+
+---
+
+### ER Diagram
+
+
+## Features
+
+### Authentication
+Only users that have been given strict access are able to log on to this webpage. This is due to it containing confidential information.
+
+![Login page](documentations/images/login-page.png)
+
+### Landing Page
+
+
+### Employment Management
+Perform full CRUD on employee records:
+- **Create** new profiles with name, GPID, role, line and area  
+- **Read** the employee directory, filterable by role or line  
+- **Update** details such as active status or role  
+- **Delete** profiles when staff leave  
+
+### Skills Matrix
+Maintain and assign skill sets for each employee:
+- Define master skills  
+- Attach primary, secondary, tertiary skills to an employee  
+- Search/filter employees by skill  
+
+### Holiday Page
+Managers can submit time-off requests on behalf of employees; managers can then approve or reject based of discretion:
+- View list of pending, approved, and rejected requests  
+- See requests grouped by area of work  
+
+### Future Features
+
+- **Shift Scheduling** – drag-and-drop roster management with AI features to auto assign.
+- **Reporting** – exportable CSV/PDF summaries of utilisation, skills coverage, holidays  
+- **Role-Based Permissions** – more granular access controls for HR vs. line managers  
+
+## Features Not Included
+
+- **Bulk Import/Export** of employee data  
+- **Email Notifications** for request status changes  
+- **Mobile-First Layout** (responsive design is basic for now as the use will predomminatly be on desktop)
+
+## Technologies Used
+
+Here are the tools and services used to build and deploy this project:
+
+- **GitHub**: code hosting and version control.
+- **Heroku**: platform for deploying the application via a `Procfile`.
+- **PostgreSQL from Code Institute**: external PostgreSQL database hosting (configured via `DATABASE_URL`).
+- **sqlparse**: used for formatting SQL queries and migrations.  
+
+### Programming Languages, Frameworks and Libraries
+
+- **Python 3**  
+- **Django 4.2.7**  
+- **django-allauth** for authentication  
+- **django-crispy-forms**, **crispy-bootstrap5**, **django-widget-tweaks**, **django-summernote** for form rendering and rich-text editing
+- **Bootstrap 5**, **HTML5**, **CSS3**, **JavaScript**  
+- **dj-database-url**, **psycopg2-binary** for database configuration & PostgreSQL driver
+- **Gunicorn**, **WhiteNoise** for the WSGI server and static file serving
+- **PyJWT**, **oauthlib**, **requests-oauthlib**, **python3-openid** for OAuth and JWT support  
+- **asgiref**, **urllib3** as core dependencies
+
+## Agile
+
+This project was designed using Agile methodology, utilising the Project Board and Issues sections in GitHub.
+
+
+## Testing
+
+All tests were performed from the **Manager** perspective, using desktop, tablet, and mobile browsers. Any issues were fixed before moving on to the next feature.
+
+### Manual Testing (Manager)
+
+| TEST                                              | OUTCOME                                                               | PASS/FAIL |
+|---------------------------------------------------|-----------------------------------------------------------------------|-----------|
+| Manager Login                                     | Successfully authenticated and redirected to Dashboard               | Pass      |
+| View Employee Directory                           | Employee list displays names, roles, shifts, lines, and areas        | Pass      |
+| Create Employee                                   | New employee created and appears correctly in the directory          | Pass      |
+| Edit Employee                                     | Employee details (role, line, area, active status) updated           | Pass      |
+| Delete Employee                                   | Employee removed and no longer listed                                 | Pass      |
+| Page Navigation: Employee → Skills                | Clicking “Skills” on an employee loads that employee’s skill profile  | Pass      |
+| Data Flow: Employee → Skills                      | Primary/secondary/tertiary skills saved for the selected employee     | Pass      |
+| Define Skill Master Entry                         | New skill added to master list                                        | Pass      |
+| Assign Skills to Employee                         | Primary/secondary/tertiary skills correctly saved                     | Pass      |
+| Edit Employee Skill Profile                       | Updated skill assignments saved                                       | Pass      |
+| Delete Employee Skill Profile                     | Employee skill profile removed                                        | Pass      |
+| Page Navigation: Employee → Holidays              | Clicking “Holidays” on an employee loads that employee’s holiday list  | Pass      |
+| Data Flow: Employee → Holidays                    | All holiday requests for the selected employee display correctly      | Pass      |
+| View Holiday Requests                             | Pending, Approved, and Rejected requests display by area              | Pass      |
+| Approve Holiday Request                           | Status changes to “Approved” and moves to the approved list           | Pass      |
+| Decline Holiday Request                           | Status changes to “Rejected” and moves to the rejected list           | Pass      |
+| _(Future)_ Configure Shifts                       | Placeholder—feature in planning stage                                 | N/A       |
+| _(Future)_ Generate Reports                       | Placeholder—feature in planning stage                                 | N/A       |
+
+### Bugs & Fixes
+
+1. **Holiday Date Validation**  
+   - Issue: Requests where end date precedes start date were accepted without error.  
+   - Fix: Added server-side validation to ensure `end_date >= start_date`.
+
+2. **Duplicate GPID Constraint**  
+   - Issue: Integrity error when creating an employee with an existing GPID.  
+   - Fix: Client-side form check and user-friendly error message on duplicate GPIDs.
+
+3. **Style Overrides**  
+   - Issue: Custom CSS was overridden by Bootstrap defaults after layout changes.  
+   - Fix: Scoped override rules and increased specificity to preserve custom styles.
+
+4. **Employee Names**  
+   - Issue: Long or hyphenated employee names overflowed the table layout and caused misalignment.  
+   - Fix: Added CSS (`word-wrap: break-word; max-width: 200px;`) to table cells to contain names neatly.
+
+5. **Heroku Static Files**  
+   - Issue: CSS assets were not served on Heroku, resulting in a broken layout.  
+   - Fix: Configured WhiteNoise in `settings.py` and ran `python manage.py collectstatic` during deployment.
+
+6. **Environment Variables & Allowed Hosts**  
+   - Issue: `DEBUG=False` without proper `ALLOWED_HOSTS` configuration caused 500 errors in production.  
+   - Fix: Set `DEBUG=False` and specified `ALLOWED_HOSTS=['your-app.herokuapp.com']` (or `['*']` for testing) in `settings.py`.
+
+7. **Database Configuration on Deployment**  
+   - Issue: Heroku’s `DATABASE_URL` was not parsed correctly, leading to connection failures.  
+   - Fix: Integrated `dj_database_url.config()` in `settings.py` to parse and apply the `DATABASE_URL` automatically.  
+
+
+## Lighthouse
+I have tested each of the pages bar the page for Shift Schedule and Reports due to them being placeholders for future development.
+
+### Mobile & Desktop results for Home page:
+Mobile
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-homepage-mob.png)
+
+Desktop
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-homepage-desk.png)
+
+### Mobile & Desktop results for Employee page:
+Mobile
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-employee-mob.png)
+
+Desktop
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-employee-desk.png)
+
+### Mobile & Desktop results for Skills page:
+Mobile
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-skills-mob.png)
+
+Desktop
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-skills-desk.png)
+
+### Mobile & Desktop results for Holidays page:
+Mobile
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-holidays-mob.png)
+
+Desktop
+![Lighthouse Mobile Score for Home Page](documentations/images/lighhouse-holidays-desk.png)
+
+
+The performance is low on the pages where there is massive amounts of data, such as holidays page this due to annual leave planner accounting for the full year, whereas in the employees page, there is c.400 data entries so far.
+
+
+## Validation Testing
+
+### HTML & CSS
+
+The following shows HTML validations - No errors found.
+
+- Homepage
+![HTML validation of Homepage](documentations/images/homepage-html-validation.png)
+
+- Employees Page
+![HTML validation of Employee page](documentations/images/employee-html-validation.png)
+
+- Shifts Page
+![HTML validation of Shifts page](documentations/images/shifts-html-validation.png)
+
+- Holidays Page
+![HTML validation of Holidays page](documentations/images/holiday-html-validation.png)
+
+- Reports Page
+![HTML validation of Reports page](documentations/images/reports-html-validation.png)
+
+- Skills Page
+![HTML validation of Skills page](documentations/images/skills-html-validation.png)
+
+- Static CSS code
+![HTML validation of CSS code](documentations/images/css-validation.png)
