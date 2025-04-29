@@ -1,10 +1,18 @@
+{# skills/templates/skills/index.html #}
 {% extends "labour_management/base.html" %}
+{% load static %}
+
 {% block title %}Skills Matrix{% endblock %}
+{# tell base.html which page we’re on so it can highlight the nav link #}
+{% block body_data_page %}skills-index{% endblock %}
+
 {% block content %}
 <div class="container py-4">
   <h1>Skills Matrix</h1>
   <a href="{% url 'skills_create' %}" class="btn btn-primary mb-3">Add Skill</a>
-  <table class="table table-striped">
+
+  {# same table classes + responsive-card as employees page #}
+  <table class="table table-striped responsive-card">
     <thead>
       <tr>
         <th>GPID</th>
@@ -21,21 +29,24 @@
     <tbody>
       {% for sk in skills %}
       <tr>
-        <td>{{ sk.employee.gpid }}</td>
-        <td>{{ sk.employee.full_name }}</td>
-        <td>{{ sk.employee.shift }}</td>
-        <td>{{ sk.employee.line }}</td>
-        <td>{{ sk.employee.area }}</td>
-        <td>{{ sk.primary_skill.name }}</td>
-        <td>{{ sk.secondary_skill.name|default:"—" }}</td>
-        <td>{{ sk.tertiary_skill.name|default:"—" }}</td>
-        <td>
+        <td data-label="GPID">{{ sk.employee.gpid }}</td>
+        <td data-label="Employee">{{ sk.employee.full_name }}</td>
+        <td data-label="Shift">{{ sk.employee.shift }}</td>
+        <td data-label="Line">{{ sk.employee.line }}</td>
+        <td data-label="Area">{{ sk.employee.area }}</td>
+        <td data-label="Primary">{{ sk.primary_skill.name }}</td>
+        <td data-label="Secondary">{{ sk.secondary_skill.name|default:"—" }}</td>
+        <td data-label="Tertiary">{{ sk.tertiary_skill.name|default:"—" }}</td>
+        <td data-label="Actions">
+          {# use same btn classes as employees: btn-sm + bootstrap warning/danger #}
           <a href="{% url 'skills_update' sk.pk %}" class="btn btn-sm btn-warning">Edit</a>
           <a href="{% url 'skills_delete' sk.pk %}" class="btn btn-sm btn-danger">Delete</a>
         </td>
       </tr>
       {% empty %}
-      <tr><td colspan="9">No skills recorded yet.</td></tr>
+      <tr>
+        <td colspan="9" class="text-center">No skills recorded yet.</td>
+      </tr>
       {% endfor %}
     </tbody>
   </table>

@@ -1,62 +1,62 @@
-{# employees/templates/employees/index.html #}
 {% extends "labour_management/base.html" %}
 {% load static %}
 
 {% block title %}Employee Database{% endblock %}
 
 {% block content %}
-  <div class="container py-4">
-    <h1>Employee Database</h1>
-    <p>
-      <a href="{% url 'employees_create' %}" class="btn btn-primary">
-        + Add Employee
-      </a>
-    </p>
+<div class="container py-4">
+  <h1>Employee Database</h1>
+  <p>
+    <a href="{% url 'employees_create' %}" class="btn btn-primary">
+      + Add Employee
+    </a>
+  </p>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Full Name</th>
-          <th>GPID</th>
-          <th>Shift</th>
-          <th>Role</th>
-          <th>Area</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for emp in employees %}
-          <tr>
-            <td>{{ emp.full_name }}</td>
-            <td>{{ emp.gpid }}</td>
-            <td>{{ emp.shift }}</td>
-            <td>{{ emp.get_role_display }}</td>
-            <td>{{ emp.area }}</td>
-            <td>
-              {% if emp.active %}
-                <span class="text-success">Active</span>
-              {% else %}
-                <span class="text-danger">Inactive</span>
-              {% endif %}
-            </td>
-            <td>
-              <a href="{% url 'employees_update' emp.pk %}" 
-                 class="btn btn-sm btn-warning">
-                Edit
-              </a>
-              <a href="{% url 'employees_delete' emp.pk %}" 
-                 class="btn btn-sm btn-danger">
-                Delete
-              </a>
-            </td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="7" class="text-center">No employees yet.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  <table class="table table-striped responsive-card">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>GPID</th>
+        <th>Shift</th>
+        <th>Role</th>
+        <th>Area</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for emp in employees %}
+      <tr>
+        <td data-label="Full Name">{{ emp.full_name }}</td>
+        <td data-label="GPID">{{ emp.gpid }}</td>
+        <td data-label="Shift">{{ emp.shift }}</td>
+        <td data-label="Role">{{ emp.get_role_display }}</td>
+        <td data-label="Area">{{ emp.area }}</td>
+        <td data-label="Status">
+          {% if emp.active %}
+            <span class="text-success">Active</span>
+          {% else %}
+            <span class="text-danger">Inactive</span>
+          {% endif %}
+        </td>
+        <td data-label="Actions">
+          <!-- use your custom btn-edit / btn-delete classes -->
+          <a href="{% url 'employees_update' emp.pk %}" 
+             class="btn btn-sm btn-edit">
+            Edit
+          </a>
+          <a href="{% url 'employees_delete' emp.pk %}" 
+             class="btn btn-sm btn-delete">
+            Delete
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7" class="text-center">No employees yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

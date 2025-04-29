@@ -10,20 +10,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 2) read SECRET_KEY and DEBUG from environment
 SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG      = os.environ.get("DJANGO_DEBUG", "False") == "True"
+DEBUG      = False
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     ".app.github.dev",
-    # add your heroku domain here, e.g. "myapp.herokuapp.com"
+    "labour-tool-45111572f062.herokuapp.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "https://localhost:8000",
-    # add your deployed domain(s) here
+    "https://labour-tool-45111572f062.herokuapp.com",
 ]
+
 
 INSTALLED_APPS = [
     "widget_tweaks",
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "employees",
     "shifts",
     "holidays",
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",           # ← add WhiteNoise
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -55,7 +58,7 @@ ROOT_URLCONF = "labour_management.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "labour_management/templates"],
+        "DIRS": [BASE_DIR / "labour_management" / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -81,8 +84,6 @@ DATABASES = {
 
 
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
@@ -92,8 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -101,10 +100,10 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "labour_management" / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"  # ← where collectstatic will gather files
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # ← WhiteNoise
 
 
 # Default primary key field type

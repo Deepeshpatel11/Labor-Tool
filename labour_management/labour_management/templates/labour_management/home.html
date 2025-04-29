@@ -1,0 +1,39 @@
+{% extends "labour_management/base.html" %}
+
+{% block title %}Welcome to the Labour Tool{% endblock %}
+
+{% block content %}
+<div class="container py-4" data-page="home">
+  <h1>Welcome to the Labour Management Tool</h1>
+  <p>
+    Use the navigation bar above to access the different sections of the application:
+  </p>
+
+  <ul class="list-unstyled">
+    <li>
+      <strong>Employees</strong><br>
+      Create, view, update and delete employee records—manage GPID, shift, area, role and active/inactive status.
+    </li>
+    <li class="mt-3">
+      <strong>Holiday Requests</strong><br>
+      Submit new holiday requests, view the year‐long calendar of staff leave, and approve or reject requests.
+    </li>
+    <li class="mt-3">
+      <strong>Skills Matrix</strong><br>
+      Track primary, secondary and tertiary skills for each employee to ensure proper training coverage.
+    </li>
+    <li class="mt-3">
+      <strong>Shift Schedule</strong> <span class="text-warning">(Under construction)</span><br>
+      Coming soon: assign employees to lines and shifts, then generate your manning rota automatically.
+    </li>
+    <li class="mt-3">
+      <strong>Reports</strong> <span class="text-warning">(Under construction)</span><br>
+      Coming soon: detailed labour and performance reports to help you analyse staffing and productivity.
+    </li>
+  </ul>
+
+  <p class="mt-4 text-muted">
+    If you need help, please contact your system administrator.
+  </p>
+</div>
+{% endblock %}

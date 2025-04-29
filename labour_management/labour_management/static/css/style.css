@@ -1,444 +1,202 @@
-/* Nav bar */
+/* labour_management/static/css/style.css */
 
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* GLOBAL BASE STYLES */
 body {
-  background-color: #f8f9fa;
+  background: #f8f9fa;
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
-
-h1 {
+h1, h2, h3, h4, h5 {
   color: #003366;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
-/* General Table Styling */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  background-color: white;
-  margin-bottom: 20px;
-}
-
-th,
-td {
-  padding: 10px;
-  border: 1px solid #ccc;
-  text-align: left;
-  font-size: 14px;
-}
-
-th {
-  background-color: #f0f9fa;
-  font-weight: bold;
-  white-space: nowrap;
-  text-align: center;
-}
-
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* NAVBAR */
 .navbar {
-  background-color: #007bff;
-  padding: 15px;
-  text-align: center;
+  background: #007bff;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navbar a {
-  color: white;
+  color: #fff;
   text-decoration: none;
-  padding: 10px;
-  margin: 5px;
+  margin: 0.25rem 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
 }
 
 .navbar a:hover {
-  background-color: #0056b3;
+  background: rgba(255,255,255,0.2);
 }
 
+.navbar a.active {
+  background: #0056b3;
+}
+
+/* make each UL a flex row */
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* space out each LI */
+.navbar-nav .nav-item {
+  margin-left: 1rem;
+}
+
+/* remove Bootstrap collapse border if present */
+.collapse.navbar-collapse {
+  border: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* LAYOUT CONTAINER */
 .container {
-  padding: 20px;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
-/* Employee - index Page Styles */
-.page-title {
-  margin-top: 20px;
-  color: #003366;
-}
-
-.action-bar {
-  margin-bottom: 15px;
-}
-
-.btn-add,
-.btn-request {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* BUTTONS */
+.btn {
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.75rem;
   cursor: pointer;
 }
-
-.btn-request:hover {
-  background-color: #0056b3;
-}
-
-.employee-table th,
-.employee-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.btn-edit,
-.btn-delete {
-  padding: 5px 10px;
-  margin-right: 5px;
+.btn-add, .btn-request, .btn-success, .btn-primary {
+  background: #007bff;
+  color: #fff;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
-
+.btn-add:hover, .btn-request:hover, .btn-success:hover, .btn-primary:hover {
+  background: #0056b3;
+}
+.btn-secondary {
+  background: #6c757d;
+  color: #fff;
+  border: none;
+}
+.btn-secondary:hover {
+  background: #565e64;
+}
 .btn-edit {
-  background-color: #ffc107;
+  background: #ffc107;
+  border: none;
+  color: #212529;
 }
-
 .btn-delete {
-  background-color: #dc3545;
-  color: white;
+  background: #dc3545;
+  border: none;
+  color: #fff;
+}
+.btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #007bff;
+  text-decoration: underline;
 }
 
-.status-active {
-  color: green;
-  font-weight: bold;
-}
-
-.status-inactive {
-  color: red;
-  font-weight: bold;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  width: 40%;
-  border-radius: 8px;
-}
-
-.close {
-  float: right;
-  font-size: 28px;
-  cursor: pointer;
-}
-
-/* Rota Table (Manning) */
-.rota-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  padding: 20px;
-}
-
-.line-column {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  flex: 1 1 300px;
-  min-width: 330px;
-}
-
-.rota-table {
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* TABLES */
+.table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  margin-bottom: 1.5rem;
+  background: #fff;
 }
-
-.rota-table th,
-.rota-table td {
-  border: 1px solid #ccc;
-  padding: 8px 10px;
-  text-align: left;
+.table th, .table td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  font-size: 0.9rem;
 }
-
-.rota-table thead {
-  background-color: #f1f1f1;
-}
-
-.manning-rota {
-  margin: 20px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #003366;
-}
-
-/* Colored Columns */
-.line-column:nth-child(1) { background-color: #e6f7ff; }
-.line-column:nth-child(2) { background-color: #fff0f5; }
-.line-column:nth-child(3) { background-color: #f9fbe7; }
-.line-column:nth-child(4) { background-color: #f3e5f5; }
-.line-column:nth-child(5) { background-color: #fef9e7; }
-.line-column:nth-child(6) { background-color: #e8f5e9; }
-.line-column:nth-child(7) { background-color: #fce4ec; }
-
-
-/* ensure hidden by default */
-.scenario-block { display: none; }
-
-
-@media (max-width: 768px) {
-  .rota-container {
-    flex-direction: column;
-    overflow-x: visible;
-    padding: 10px;
-  }
-
-  .line-column {
-    min-width: 100%;
-    margin-bottom: 20px;
-  }
-
-  table th {
-    position: static;
-  }
-}
-
-/* Holidays Page */
-/* Holiday Scrollable Table Wrapper */
-.holiday-scroll-container {
-  overflow-x: auto;
-  max-width: 100%;
-  border: 1px solid #ccc;
-  background-color: white;
-  padding: 10px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.holiday-table {
-  border-collapse: collapse;
-  width: max-content;
-  min-width: 100%;
-  table-layout: fixed;
-}
-
-.holiday-table th,
-.holiday-table td {
-  border: 1px solid #ccc;
-  padding: 8px 10px;
+.table thead th {
+  background: #e9f7fc;
+  font-weight: 600;
   text-align: center;
-  background-color: white;
-  white-space: nowrap;
 }
 
-/* Allow text wrapping and break long words in first 5 columns */
-.holiday-table td:nth-child(-n+5),
-.holiday-table th:nth-child(-n+5) {
-  white-space: normal;
-  word-break: break-word;
-  text-align: left;
-  padding: 10px;
-  min-width: 100px;
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* PAGE-SPECIFIC STYLES (via body[data-page]) */
+body[data-page="employees-index"] .page-title {
+  color: #003366;
+}
+body[data-page="employees-index"] .action-bar .btn-add {
+  background: #28a745;
 }
 
-
-/* Header row */
-.holiday-table th {
-  background-color: #f0f9fa;
-  font-weight: bold;
-  font-size: 14px;
-  z-index: 1;
-  position: sticky;
-  top: 0;
+body[data-page="shifts-index"] .btn-primary {
+  background: #17a2b8;
+}
+body[data-page="shifts-index"] .table td {
+  vertical-align: middle;
 }
 
-/* Sticky first 5 columns */
-.holiday-table td:nth-child(1),
-.holiday-table th:nth-child(1) {
-  position: sticky;
-  left: 0;
-  z-index: 2;
-  background-color: white;
+body[data-page="holidays-index"] .holiday-scroll-container {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.holiday-table td:nth-child(2),
-.holiday-table th:nth-child(2) {
-  position: sticky;
-  left: 100px;
-  z-index: 2;
-  background-color: white;
+body[data-page="skills-index"] .table thead th {
+     background: #e9f7fc;
 }
 
-.holiday-table td:nth-child(3),
-.holiday-table th:nth-child(3) {
-  position: sticky;
-  left: 200px;
-  z-index: 2;
-  background-color: white;
+body[data-page="reports-index"] .container {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #6c757d;
 }
 
-.holiday-table td:nth-child(4),
-.holiday-table th:nth-child(4) {
-  position: sticky;
-  left: 300px;
-  z-index: 2;
-  background-color: white;
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE: TABLE → CARD LAYOUT ON NARROW SCREENS */
+@media (max-width: 600px) {
+
+  /* hide header row */
+  table.responsive-card thead {
+    display: none;
+  }
+
+  /* make each row a card */
+  table.responsive-card tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  /* cells become flex pairs */
+  table.responsive-card td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+  table.responsive-card td:last-child {
+    border-bottom: none;
+  }
+
+  /* use data-label attr for labels */
+  table.responsive-card td:before {
+    content: attr(data-label);
+    flex: 1 1 50%;
+    font-weight: 600;
+    color: #333;
+  }
+  table.responsive-card td:after {
+    content: "";
+    flex: 0 1 50%;
+  }
 }
 
-.holiday-table td:nth-child(5),
-.holiday-table th:nth-child(5) {
-  position: sticky;
-  left: 400px;
-  z-index: 2;
-  background-color: white;
-}
-
-/* Holiday filters */
-.holiday-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-  align-items: center;
-}
-
-.holiday-filters input,
-.holiday-filters select {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.leave-approved {
-  background-color: #d4edda; /* light green */
-  color: #155724;
-  font-weight: bold;
-}
-
-.leave-pending {
-  background-color: #fff3cd; /* light yellow */
-  color: #856404;
-  font-weight: bold;
-}
-
-.btn-approve {
-  background-color: #28a745;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-/* Approve leave modal */
-.btn-approve-small,
-.btn-reject-small {
-  padding: 5px 8px;
-  margin: 5px 2px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-approve-small {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-reject-small {
-  background-color: #dc3545;
-  color: white;
-}
-
-.pending-request {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
-}
-
-
-/* Skills Matrix - Table and Modal Styles */
-
-.skills-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  margin-top: 10px;
-}
-
-.skills-table th,
-.skills-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.skills-table th {
-  background-color: #f0f9fa;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.btn-add,
-.btn-edit,
-.btn-delete {
-  padding: 6px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-add {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-edit {
-  background-color: #ffc107;
-  color: white;
-}
-
-.btn-delete {
-  background-color: #dc3545;
-  color: white;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 10;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  width: 40%;
-  border-radius: 8px;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-}
-
-.close {
-  float: right;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-}
