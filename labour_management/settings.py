@@ -3,14 +3,14 @@ import dj_database_url
 from pathlib import Path
 
 # 1) import our local env.py (if present)
-if (Path(__file__).parent / "env.py").is_file():
-    from . import env
+if os.path.isfile('env.py'):
+    import env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 2) read SECRET_KEY and DEBUG from environment
 SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG      = True
+DEBUG      = False
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -20,8 +20,6 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "https://localhost:8000",
     "https://labour-tool-45111572f062.herokuapp.com",
 ]
 
@@ -103,7 +101,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "labour_management" / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"  # ← where collectstatic will gather files
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # ← WhiteNoise
 
 
 # Default primary key field type
@@ -114,3 +111,23 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
 LOGOUT_REDIRECT_URL = "/accounts/login/?logged_out=1"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "debug.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}

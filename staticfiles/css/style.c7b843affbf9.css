@@ -1,0 +1,202 @@
+/* labour_management/static/css/style.css */
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* GLOBAL BASE STYLES */
+body {
+  background: #f8f9fa;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+h1, h2, h3, h4, h5 {
+  color: #003366;
+  margin-bottom: 1rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* NAVBAR */
+.navbar {
+  background: #007bff;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0.25rem 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.navbar a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.navbar a.active {
+  background: #0056b3;
+}
+
+/* make each UL a flex row */
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* space out each LI */
+.navbar-nav .nav-item {
+  margin-left: 1rem;
+}
+
+/* remove Bootstrap collapse border if present */
+.collapse.navbar-collapse {
+  border: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* LAYOUT CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* BUTTONS */
+.btn {
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+.btn-add, .btn-request, .btn-success, .btn-primary {
+  background: #007bff;
+  color: #fff;
+  border: none;
+}
+.btn-add:hover, .btn-request:hover, .btn-success:hover, .btn-primary:hover {
+  background: #0056b3;
+}
+.btn-secondary {
+  background: #6c757d;
+  color: #fff;
+  border: none;
+}
+.btn-secondary:hover {
+  background: #565e64;
+}
+.btn-edit {
+  background: #ffc107;
+  border: none;
+  color: #212529;
+}
+.btn-delete {
+  background: #dc3545;
+  border: none;
+  color: #fff;
+}
+.btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* TABLES */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  background: #fff;
+}
+.table th, .table td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+.table thead th {
+  background: #e9f7fc;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* PAGE-SPECIFIC STYLES (via body[data-page]) */
+body[data-page="employees-index"] .page-title {
+  color: #003366;
+}
+body[data-page="employees-index"] .action-bar .btn-add {
+  background: #28a745;
+}
+
+body[data-page="shifts-index"] .btn-primary {
+  background: #17a2b8;
+}
+body[data-page="shifts-index"] .table td {
+  vertical-align: middle;
+}
+
+body[data-page="holidays-index"] .holiday-scroll-container {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+body[data-page="skills-index"] .table thead th {
+     background: #e9f7fc;
+}
+
+body[data-page="reports-index"] .container {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #6c757d;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE: TABLE → CARD LAYOUT ON NARROW SCREENS */
+@media (max-width: 600px) {
+
+  /* hide header row */
+  table.responsive-card thead {
+    display: none;
+  }
+
+  /* make each row a card */
+  table.responsive-card tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  /* cells become flex pairs */
+  table.responsive-card td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+  table.responsive-card td:last-child {
+    border-bottom: none;
+  }
+
+  /* use data-label attr for labels */
+  table.responsive-card td:before {
+    content: attr(data-label);
+    flex: 1 1 50%;
+    font-weight: 600;
+    color: #333;
+  }
+  table.responsive-card td:after {
+    content: "";
+    flex: 0 1 50%;
+  }
+}
+
