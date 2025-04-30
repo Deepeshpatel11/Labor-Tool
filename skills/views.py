@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import EmployeeSkill
 from .forms import EmployeeSkillForm
 
+
 class SkillListView(LoginRequiredMixin, ListView):
     """
     Lists all employee skills.  Requires login.
@@ -15,6 +16,7 @@ class SkillListView(LoginRequiredMixin, ListView):
     model = EmployeeSkill
     template_name = "skills/index.html"
     context_object_name = "skills"
+
 
 class SkillCreateView(LoginRequiredMixin, CreateView):
     """
@@ -26,6 +28,7 @@ class SkillCreateView(LoginRequiredMixin, CreateView):
     template_name = "skills/skill_form.html"
     success_url = reverse_lazy("skills_index")
 
+
 class SkillUpdateView(LoginRequiredMixin, UpdateView):
     """
     Update an existing EmployeeSkill.  Requires login.
@@ -35,6 +38,7 @@ class SkillUpdateView(LoginRequiredMixin, UpdateView):
     form_class = EmployeeSkillForm
     template_name = "skills/skill_form.html"
     success_url = reverse_lazy("skills_index")
+
 
 class SkillDeleteView(LoginRequiredMixin, DeleteView):
     """

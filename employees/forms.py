@@ -2,6 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from .models import Employee
 
+
 class EmployeeForm(forms.ModelForm):
     # only digits allowed, at least one character
     gpid = forms.CharField(

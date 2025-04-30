@@ -1,6 +1,7 @@
 from django.db import models
 from employees.models import Employee    # adjust import path if needed
 
+
 class Area(models.Model):
     """
     A work area (e.g. Process, Primary Packaging, Palletiser, etc.).

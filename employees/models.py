@@ -3,15 +3,16 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class Employee(models.Model):
     # link to Django’s built‑in User
     full_name = models.CharField(max_length=100, unique=True)
-    gpid      = models.CharField(max_length=20, unique=True)
+    gpid = models.CharField(max_length=20, unique=True)
 
     # four‑colour shift cycle
-    SHIFT_GREEN  = "Green"
-    SHIFT_BLUE   = "Blue"
-    SHIFT_RED    = "Red"
+    SHIFT_GREEN = "Green"
+    SHIFT_BLUE = "Blue"
+    SHIFT_RED = "Red"
     SHIFT_YELLOW = "Yellow"
     SHIFT_CHOICES = [
         (SHIFT_GREEN,  "Green"),
@@ -27,14 +28,14 @@ class Employee(models.Model):
 
     # add Role choices
     ROLE_GSO = "GSO"
-    ROLE_GO  = "GO"
-    ROLE_MT  = "MT"
-    ROLE_ST  = "ST"
+    ROLE_GO = "GO"
+    ROLE_MT = "MT"
+    ROLE_ST = "ST"
     ROLE_CHOICES = [
         (ROLE_GSO, "General Support Operator"),
-        (ROLE_GO,  "General Operator"),
-        (ROLE_MT,  "Manufacturing Technician"),
-        (ROLE_ST,  "Shift Technician"),
+        (ROLE_GO, "General Operator"),
+        (ROLE_MT, "Manufacturing Technician"),
+        (ROLE_ST, "Shift Technician"),
     ]
     role = models.CharField(
         max_length=3,
@@ -44,17 +45,17 @@ class Employee(models.Model):
     )
 
     # production line assignment (plus MOH & ALL)
-    LINE_1   = "1"
-    LINE_2   = "2"
-    LINE_3   = "3"
-    LINE_4   = "4"
+    LINE_1 = "1"
+    LINE_2 = "2"
+    LINE_3 = "3"
+    LINE_4 = "4"
     LINE_MOH = "MOH"
     LINE_ALL = "ALL"
     LINE_CHOICES = [
-        (LINE_1,   "Line 1"),
-        (LINE_2,   "Line 2"),
-        (LINE_3,   "Line 3"),
-        (LINE_4,   "Line 4"),
+        (LINE_1, "Line 1"),
+        (LINE_2, "Line 2"),
+        (LINE_3, "Line 3"),
+        (LINE_4, "Line 4"),
         (LINE_MOH, "MOH"),
         (LINE_ALL, "ALL"),
     ]
@@ -66,7 +67,7 @@ class Employee(models.Model):
     )
 
     # work area FK into skills app
-    area   = models.ForeignKey("skills.Area", on_delete=models.PROTECT)
+    area = models.ForeignKey("skills.Area", on_delete=models.PROTECT)
     active = models.BooleanField(default=True)
 
     def __str__(self):

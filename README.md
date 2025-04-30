@@ -83,19 +83,51 @@ This neutral palette keeps the interface clean and consistent, with accents guid
 
 ## Wireframes
 
+### Desktop Login wireframe
+
+![Login page - Wireframe](documentations/images/home-wireframe-mob.png)
+
 ### Mobile Employee App Homepage wireframe
+
+![Employee page - Wireframe](documentations/images/employee-wireframe-mob.png)
+
 ### Mobile Skills App Homepage wireframe
+
+![Employee page - Wireframe](documentations/images/skill-wireframe-mob.png)
+
 ### Mobile Holiday App Homepage wireframe
 
+![Employee page - Wireframe](documentations/images/holiday-wireframe-mob.png)
+
+### Tablet Login wireframe
+
+
 ### Tablet Employee App Homepage wireframe
+
+
 ### Tablet Skills App Homepage wireframe
+
+
+
 ### Tablet Holiday App Homepage wireframe
 
+
+
+### Desktop Login wireframe
+
+![Login page - Wireframe](documentations/images/home-wireframe-desktop.png)
+
 ### Desktop Employee App Homepage wireframe
+
+![Employee page - Wireframe](documentations/images/employee-wireframe-desktop.png)
+
 ### Desktop Skills App Homepage wireframe
+
+![Employee page - Wireframe](documentations/images/skill-wireframe-desktop.png)
+
 ### Desktop Holiday App Homepage wireframe
 
-## Flow Diagram
+![Employee page - Wireframe](documentations/images/holiday-wireframe-desktop.png)
 
 
 ## Database Plan
@@ -166,8 +198,6 @@ Below is an outline of the main tables, their columns, data types, constraints, 
 
 ---
 
-### ER Diagram
-
 
 ## Features
 
@@ -177,6 +207,7 @@ Only users that have been given strict access are able to log on to this webpage
 ![Login page](documentations/images/login-page.png)
 
 ### Landing Page
+
 
 
 ### Employment Management
@@ -232,7 +263,7 @@ Here are the tools and services used to build and deploy this project:
 
 ## Agile
 
-This project was designed using Agile methodology, utilising the Project Board and Issues sections in GitHub.
+This project was designed using Agile methodology, utilising the Project Board and Issues sections in GitHub. https://github.com/users/Deepeshpatel11/projects/15
 
 
 ## Testing
@@ -354,3 +385,106 @@ The following shows HTML validations - No errors found.
 
 - Static CSS code
 ![HTML validation of CSS code](documentations/images/css-validation.png)
+
+
+### Python Testing
+
+Python pep8 validation was done via [Code Institute's Python Linter](https://pep8ci.herokuapp.com/)
+
+The only errors recieved here were where some lines of text exceeded the limit of 79 characters, but these have now been rectified.
+
+Python Files Tested:
+
+- admin
+- models
+- forms
+- views
+- urls
+- settings
+
+## GitHub Deployment
+
+The website’s source code is stored on GitHub for version control and collaboration. After each addition, change, or removal of code, run the following commands in your IDE’s terminal:
+
+```bash
+git add .
+git commit -m "meaningful commit message"
+git push
+```
+
+Your changes will be available in your GitHub repository at:
+https://github.com/Deepeshpatel11/Labor-Tool
+
+
+## Creating a Fork or Copy
+```md
+To fork or copy the repository:
+
+1. Go to the repository page: https://github.com/Deepeshpatel11/Labor-Tool  
+2. Click the **Fork** button in the top-right corner to create your own copy under your GitHub account.
+```
+
+## Cloning the Repository
+
+To clone the repo to your local machine:
+
+1. On the repo page, click the **Code** button (to the left of the Gitpod tab).  
+2. Click the clipboard icon to copy the clone URL (`https://github.com/Deepeshpatel11/Labor-Tool.git`).  
+3. Open your terminal (e.g., Git Bash) and navigate to your desired directory.  
+4. Run:
+   ```bash
+   git clone https://github.com/Deepeshpatel11/Labor-Tool.git
+   ```
+5. Enter the cloned directory:
+    ```bash
+    cd Labor-Tool
+    ```
+
+
+## Repository Deployment via Heroku
+
+```md
+1. Log in to your [Heroku Dashboard](https://dashboard.heroku.com).  
+2. Click **New** → **Create new app**.  
+3. Enter an **App name**, choose a **Region**, then click **Create app**.  
+4. Under the **Settings** tab, click **Reveal Config Vars** and add:
+   - `SECRET_KEY` : `<your SECRET KEY>`
+   - `DATABASE_URL` : `<your Postgres Database URL>`
+
+5. Still in **Settings**, click **Add buildpack** and add, in this order:
+   1. `heroku/python`
+   2. `heroku/nodejs`
+```
+
+## Deploying the App on Heroku
+
+1. Switch to the **Deploy** tab.  
+2. Under **Deployment method**, select **GitHub**.  
+3. Search for `Deepeshpatel11/Labor-Tool` and click **Connect**.  
+4. Choose **Automatic deploys** (optional) to redeploy on every push, or **Manual deploy** to trigger builds yourself.  
+5. Click **Deploy Branch** (or wait for automatic deploy).  
+6. Once the build succeeds, click **Open app** to launch your live site.
+
+
+## Credits
+
+### Project Lead
+- **Deepesh Patel** – concept, design, development, testing, documentation, and deployment.
+
+### Mentor
+- **Jubril** - Thank you for guiding me and helping me bring my vision to fruition.
+
+### Hosting & Deployment
+- **Version Control**: GitHub  
+- **CI/CD & Runtime**: Heroku  
+- **IDE & Containers**: Visual Studio Code  
+
+### Acknowledgements
+- **Django Documentation** – for comprehensive framework guidance  
+- **Bootstrap Documentation** – for responsive UI patterns  
+- **Code Institute** – Full Stack Software Development Diploma curriculum  
+- **Open-Source Community** – maintainers of all third-party packages used  
+- **Paigination** - I used this guide to have responsive paigination https://www.sitepoint.com/community/t/responsive-table-that-converts-to-card-layout/322248/2
+- **Deployment** - A special shout out to Oisin, whom helped me debug my code.
+- **Testing** - Thank You Shiv for testing out the functionality of the website on different devices.
+- **Emotional Support** - Prachi Thank you for dealing with my querks whilst this projecgt consumed me and pushing me to achieve this goal!
