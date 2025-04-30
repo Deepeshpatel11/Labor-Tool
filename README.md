@@ -10,7 +10,7 @@ Portfolio project for managing employees, shifts, holidays, skills and reporting
 
 ## Live Demo
 
-🔗 https://labour-tool-45111572f062.herokuapp.com
+🔗 [Live Deployed Project](https://labour-tool-45111572f062.herokuapp.com)
 
 ---
 
@@ -93,25 +93,27 @@ This neutral palette keeps the interface clean and consistent, with accents guid
 
 ### Mobile Skills App Homepage wireframe
 
-![Employee page - Wireframe](documentations/images/skill-wireframe-mob.png)
+![Skills page - Wireframe](documentations/images/skill-wireframes-mob.png)
 
 ### Mobile Holiday App Homepage wireframe
 
-![Employee page - Wireframe](documentations/images/holiday-wireframe-mob.png)
+![Holiday page - Wireframe](documentations/images/holidays-wireframe-mob.png)
 
 ### Tablet Login wireframe
 
+![Login page - Wireframe](documentations/images/home-wireframe-mob.png)
 
 ### Tablet Employee App Homepage wireframe
 
+![Employee page - Wireframe](documentations/images/employee-wireframe-tab.png)
 
 ### Tablet Skills App Homepage wireframe
 
-
+![Skills page - Wireframe](documentations/images/skill-wireframe-tab.png)
 
 ### Tablet Holiday App Homepage wireframe
 
-
+![Skills page - Wireframe](documentations/images/holiday-wireframe-tab.png)
 
 ### Desktop Login wireframe
 
@@ -123,11 +125,11 @@ This neutral palette keeps the interface clean and consistent, with accents guid
 
 ### Desktop Skills App Homepage wireframe
 
-![Employee page - Wireframe](documentations/images/skill-wireframe-desktop.png)
+![Skills page - Wireframe](documentations/images/employee-wireframe-desktop.png)
 
 ### Desktop Holiday App Homepage wireframe
 
-![Employee page - Wireframe](documentations/images/holiday-wireframe-desktop.png)
+![Holidays page - Wireframe](documentations/images/holidays-wireframe-desktop.png)
 
 
 ## Database Plan
@@ -263,7 +265,7 @@ Here are the tools and services used to build and deploy this project:
 
 ## Agile
 
-This project was designed using Agile methodology, utilising the Project Board and Issues sections in GitHub. https://github.com/users/Deepeshpatel11/projects/15
+This project was designed using Agile methodology, utilising the Project Board and Issues sections in GitHub. [GitHub Project Board](https://github.com/users/Deepeshpatel11/projects/15)
 
 
 ## Testing
